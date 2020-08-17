@@ -1,6 +1,6 @@
 # household-account-book-swagger
 
-「おおまか家計簿」API リポジトリ
+「おおまか家計簿」 Swagger API リポジトリ
 
 ## docker コマンド
 
