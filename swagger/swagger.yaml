@@ -39,6 +39,68 @@ paths:
                   email: test@test.com
                   user_type: 1
                   main_user_id: 0
+  /partner-login:
+    post:
+      tags:
+        - users
+      summary: No.4 partner login
+      description: No.4 パートナーログイン
+      parameters: []
+      requestBody: # リクエストボディ
+        description: リクエストパラメータ
+        content:
+          application/json:
+            schema: # POSTするオブジェクト
+              $ref: '#/components/schemas/Login'
+            example:
+              email: test@test.com
+              password: password
+      responses:
+        '201':
+          description: PartnerLogin成功
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/User'
+                example:
+                  id: 1
+                  name: やすおのパートナー
+                  email: partner@test.com
+                  user_type: 2
+                  main_user_id: 1
+  /trial-login:
+    post:
+      tags:
+        - users
+      summary: No.30 trial login
+      description: No.30 トライアルログイン
+      parameters: []
+      requestBody: # リクエストボディ
+        description: リクエストパラメータ
+        content:
+          application/json:
+            schema: # POSTするオブジェクト
+              $ref: '#/components/schemas/Login'
+            example:
+              email: test@test.com
+              password: password
+      responses:
+        '201':
+          description: TrialLogin成功
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/User'
+                example:
+                  id: 1
+                  name: お試しマン
+                  email: otameshi@test.com
+                  user_type: 3
+                  main_user_id: 0
   /auth:
     post:
       tags:
