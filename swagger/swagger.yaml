@@ -280,6 +280,43 @@ paths:
                   user_type: 1
                   main_user_id: 0
 
+  /dashboard/{year_and_month}:
+    get:
+      tags:
+        - dashbord
+      summary: No.8 get calendar
+      description: No.8 カレンダー情報取得
+      parameters:
+        - name: year_and_month
+          in: path
+          description: year_and_month
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: カレンダー情報取得成功
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Dashboard'
+                example:
+                  money_date: 202005
+                  sum_month_money: 20000
+                  sum_days_money:
+                    - days: 20200501
+                      money: 3200
+                    - days: 20200502
+                      money: 100
+                    - days: 20200503
+                      money: 3500
+                    - days: 20200504
+                      money: 4200
+                    - days: 20200505
+                      money: 300
+
 components:
   schemas: # スキーマオブジェクトの定義
     Login:
@@ -317,6 +354,33 @@ components:
         main_user_id:
           type: integer
           format: int64
+    Dashboard:
+      type: object
+      required:
+        - money_date
+        - sum_month_money
+        - sum_days_money
+      properties:
+        money_date:
+          type: string
+          example: 202005
+        sum_month_money:
+          type: integer
+          format: int64
+          example: 2000
+        sum_days_money:
+          type: object
+          required:
+            - days
+            - money
+          properties:
+            days:
+              type: string
+              example: 20200501
+            money:
+              type: integer
+              format: int64
+              example: 200
     Product:
       type: object
       required:
@@ -337,5 +401,7 @@ components:
 tags:
   - name: users
     description: Access to Users
+  - name: dashbord
+    description: Access to Dashboard
   - name: products
     description: Access to Products
