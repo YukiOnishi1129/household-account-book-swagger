@@ -25,7 +25,7 @@ paths:
               email: test@test.com
               password: password
       responses:
-        '201':
+        '200':
           description: Login成功
           content:
             application/json:
@@ -56,7 +56,7 @@ paths:
               email: test@test.com
               password: password
       responses:
-        '201':
+        '200':
           description: PartnerLogin成功
           content:
             application/json:
@@ -87,7 +87,7 @@ paths:
               email: test@test.com
               password: password
       responses:
-        '201':
+        '200':
           description: TrialLogin成功
           content:
             application/json:
@@ -117,7 +117,7 @@ paths:
             example:
               id: 1
       responses:
-        '201':
+        '200':
           description: 認証成功
           content:
             application/json:
@@ -163,6 +163,53 @@ paths:
                   email: test@test.com
                   user_type: 1
                   main_user_id: 0
+  /remaind-mail:
+    post:
+      tags:
+        - users
+      summary: No.5 password remaind email
+      description: No5 パスワードリマインド アドレス送信
+      parameters: []
+      requestBody:
+        description: リクエストパラメータ
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+            example:
+              email: test@test.com
+      responses:
+        '204':
+          description: パスワードリマインドメール送信成功
+  /remaind-key:
+    post:
+      tags:
+        - users
+      summary: No.6 password remaind key
+      description: No6 パスワードリマインド キー送信
+      parameters: []
+      requestBody:
+        description: リクエストパラメータ
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+            example:
+              email: test@test.com
+      responses:
+        '204':
+          description: パスワードリマインド 変更成功
+  /logout:
+    get:
+      tags:
+        - users
+      summary: No.7 logout
+      description: No.7 ログアウト
+      parameters: []
+      responses:
+        '204':
+          description: ログアウト成功
+
   # paths オブジェクト
   /users:
     # path item オブジェクト
