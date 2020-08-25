@@ -339,28 +339,38 @@ paths:
                   name: test@test.com
                   user_type: 1
                   main_user_id: 0
+    delete:
+      tags:
+        - users
+      summary: Get user
+      description: user情報取得
+      parameters: # リクエストパラメータ
+        - name: userId
+          in: path # パラメータをパス内に含める
+          description: user id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: user情報取得成功
 
-  /dashboard:
+  /calendar/{year_and_month}:
     get:
       tags:
-        - dashbord
+        - calendar
       summary: No.8 get calendar
       description: No.8 カレンダー情報取得
+      security:
+        - CookieAuth: []
       parameters:
         - name: year_and_month
-          in: query
+          in: path
           description: year_and_month
           required: true
           schema:
             type: string
             format: date
-        - name: usr_id
-          in: query
-          description: usr_id
-          required: true
-          schema:
-            type: integer
-            format: int64
       responses:
         '200':
           description: カレンダー情報取得成功
@@ -369,7 +379,7 @@ paths:
               schema:
                 type: object
                 items:
-                  $ref: '#/components/schemas/Dashboard'
+                  $ref: '#/components/schemas/Calendar'
                 example:
                   money_date: 20200501
                   sum_month_money: 20000
@@ -384,6 +394,172 @@ paths:
                       money: 4200
                     - days: 20200505
                       money: 300
+  /detail/{date}:
+    get:
+      tags:
+        - detail
+      summary: No.11 get money
+      description: No.11 日別の入力金額情報取得
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: date
+          in: path
+          description: date
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: 日別の入力金額情報取得成功
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Detail'
+                example:
+                  details:
+                    - id: 1
+                      money: 2000
+                      img_file: xxx.jpg
+                      category_id: 1
+                      category_name: 食費
+                    - id: 2
+                      money: 30000
+                      img_file: xxx.jpg
+                      category_id: 3
+                      category_name: 経費
+                    - id: 3
+                      money: 100000
+                      img_file: xxx.jpg
+                      category_id: 1
+                      category_name: 食費
+                    - id: 4
+                      money: 150
+                      img_file: xxx.jpg
+                      category_id: 2
+                      category_name: 衣服
+                    - id: 5
+                      money: 300
+                      img_file: xxx.jpg
+                      category_id: 1
+                      category_name: 食費
+  /detail/create:
+    post:
+      tags:
+        - detail
+      summary: No.12 input money
+      description: No.12 金額入力
+      security:
+        - CookieAuth: []
+      parameters: []
+      requestBody:
+        description: リクエストパラメータ
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category_id:
+                  type: integer
+                  format: int64
+                money:
+                  type: integer
+                  format: int64
+                img_file:
+                  type: string
+                date:
+                  type: string
+                  format: date
+            example:
+              category_id: 1
+              money: 200
+              img_file: xxx.jpg
+              date: 20200501
+      responses:
+        '201':
+          description: 金額入力成功
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Detail'
+                example:
+                  details:
+                    - id: 1
+                      money: 2000
+                      img_file: xxx.jpg
+                      category_id: 1
+                      category_name: 食費
+  /detail/{money_id}:
+    put:
+      tags:
+        - detail
+      summary: No.13 update money
+      description: No.13 金額編集
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: money_id
+          in: path
+          description: money_id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: リクエストパラメータ
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                money:
+                  type: integer
+                  format: int64
+                catgory_id:
+                  type: integer
+                  format: int64
+                img_file:
+                  type: string
+                date:
+                  type: string
+                  format: date
+      responses:
+        '200':
+          description: 金額編集成功
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Detail'
+                example:
+                  details:
+                    - id: 1
+                      money: 2000
+                      category_id: 1
+                      img_file: xxx.jpg
+                      category_name: 食費
+    delete:
+      tags:
+        - detail
+      summary: No.14 delete money
+      description: No.14 金額削除
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: money_id
+          in: path
+          description: money_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: 金額削除成功
 
 components:
   securitySchemes:
@@ -427,7 +603,7 @@ components:
         main_user_id:
           type: integer
           format: int64
-    Dashboard:
+    Calendar:
       type: object
       required:
         - money_date
@@ -456,6 +632,40 @@ components:
               type: integer
               format: int64
               example: 200
+    Detail:
+      type: object
+      required:
+        - money_date
+        - sum_month_money
+        - sum_days_money
+      properties:
+        details:
+          type: object
+          required:
+            - id
+            - money
+            - img_file
+            - category_id
+            - category_name
+          properties:
+            id:
+              type: integer
+              format: int64
+              example: 1
+            money:
+              type: integer
+              format: int64
+              example: 200
+            img_file:
+              type: string
+              example: xxx.jpg
+            category_id:
+              type: integer
+              format: int64
+              example: 1
+            category_name:
+              type: string
+              example: 食費
     Product:
       type: object
       required:
@@ -475,8 +685,8 @@ components:
 
 tags:
   - name: users
-    description: Access to Users
-  - name: dashbord
-    description: Access to Dashboard
-  - name: products
-    description: Access to Products
+    description: ユーザー情報観点
+  - name: calendar
+    description: ダッシュボード関連のデータ
+  - name: detail
+    description: 日別の金額データ

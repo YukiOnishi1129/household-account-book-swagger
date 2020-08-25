@@ -53,3 +53,7 @@ docker-compose exec app bash
 - OpenAPI Specification 3.0 チートシート
 
   - https://techblog.asahi-net.co.jp/entry/2019/03/04/102734
+
+- Laravel で作る REST な Web アプリ
+
+  - https://qiita.com/MasaKu/items/82b9743383e73cb62c3e
