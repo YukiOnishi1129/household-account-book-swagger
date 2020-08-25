@@ -49,3 +49,7 @@ docker-compose exec app bash
 - Swagger と REST API の紐付けを Docker compose で実現してみた
 
   - https://qiita.com/shiminori0612/items/32c3c3fba30b42bc4800
+
+- OpenAPI Specification 3.0 チートシート
+
+  - https://techblog.asahi-net.co.jp/entry/2019/03/04/102734
