@@ -560,6 +560,54 @@ paths:
       responses:
         '204':
           description: 金額削除成功
+  # No.22 月の支出割合
+  /month-rate/{month}:
+    get:
+      tags:
+        - month_rate
+      summary: No.22 get month-rate
+      description: No.22 月の支出割合
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: month
+          in: path
+          description: month
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: 月の支出割合取得成功
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/MonthRate'
+                example:
+                  category_money:
+                    - category_id: 1
+                      category_name: 食費
+                      color_type: 1
+                      money: 3000
+                    - category_id: 2
+                      category_name: 衣服
+                      color_type: 2
+                      money: 300
+                    - category_id: 3
+                      category_name: 交通費
+                      color_type: 3
+                      money: 4000
+                    - category_id: 4
+                      category_name: 遊び
+                      color_type: 4
+                      money: 500
+                    - category_id: 5
+                      category_name: 雑費
+                      color_type: 5
+                      money: 100
 
 components:
   securitySchemes:
@@ -635,9 +683,7 @@ components:
     Detail:
       type: object
       required:
-        - money_date
-        - sum_month_money
-        - sum_days_money
+        - details
       properties:
         details:
           type: object
@@ -666,22 +712,34 @@ components:
             category_name:
               type: string
               example: 食費
-    Product:
+    MonthRate:
       type: object
       required:
-        - id
-        - price
+        - category_money
       properties:
-        id:
-          type: integer
-          format: int64
-          example: 1
-        name:
-          type: string
-          example: Laptop
-        price:
-          type: integer
-          example: 1200
+        category_money:
+          type: object
+          required:
+            - category_id
+            - category_name
+            - color_type
+            - money
+          properties:
+            category_id:
+              type: integer
+              format: int64
+              example: 1
+            category_name:
+              type: string
+              example: 食費
+            color_type:
+              type: integer
+              format: int64
+              example: 1
+            money:
+              type: integer
+              format: int64
+              example: 200
 
 tags:
   - name: users
@@ -690,3 +748,5 @@ tags:
     description: ダッシュボード関連のデータ
   - name: detail
     description: 日別の金額データ
+  - name: month_rate
+    description: 月の支出割合
