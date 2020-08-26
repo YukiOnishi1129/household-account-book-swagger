@@ -608,6 +608,58 @@ paths:
                       category_name: 雑費
                       color_type: 5
                       money: 100
+  # No.22 月の支出割合
+  /line-graph/{date}:
+    get:
+      tags:
+        - line_graph
+      summary: No.23 get line-graph
+      description: No.23 年間の支出推移
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: date
+          in: path
+          description: 現在日付
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: 年間の支出推移取得成功
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/LineGraph'
+                example:
+                  data:
+                    - month: 20190601
+                      sum_money: 30000
+                    - month: 20190701
+                      sum_money: 20000
+                    - month: 20190801
+                      sum_money: 40000
+                    - month: 20190901
+                      sum_money: 132000
+                    - month: 20191001
+                      sum_money: 140000
+                    - month: 20191101
+                      sum_money: 100000
+                    - month: 20191201
+                      sum_money: 100000
+                    - month: 20200101
+                      sum_money: 50000
+                    - month: 20200201
+                      sum_money: 60000
+                    - month: 20200301
+                      sum_money: 90000
+                    - month: 20200401
+                      sum_money: 20000
+                    - month: 20200501
+                      sum_money: 30000
 
 components:
   securitySchemes:
@@ -740,6 +792,25 @@ components:
               type: integer
               format: int64
               example: 200
+    LineGraph:
+      type: object
+      required:
+        - category_money
+      properties:
+        data:
+          type: object
+          required:
+            - month
+            - sum_money
+          properties:
+            month:
+              type: string
+              format: date
+              example: 20200501
+            sum_money:
+              type: integer
+              format: int64
+              example: 100000
 
 tags:
   - name: users
@@ -750,3 +821,5 @@ tags:
     description: 日別の金額データ
   - name: month_rate
     description: 月の支出割合
+  - name: line_graph
+    description: 年間の支出推移
