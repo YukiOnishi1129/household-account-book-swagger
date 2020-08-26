@@ -560,6 +560,141 @@ paths:
       responses:
         '204':
           description: 金額削除成功
+  # No.17 カテゴリ情報取得
+  /category:
+    get:
+      tags:
+        - category
+      summary: No.17 get category
+      description: No.17 カテゴリ情報取得
+      security:
+        - CookieAuth: []
+      parameters: []
+      responses:
+        '200':
+          description: カテゴリ情報取得成功
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Categories'
+                example:
+                  data:
+                    - id: 1
+                      category_name: 食費
+                      color_type: 1
+                    - id: 2
+                      category_name: 衣服
+                      color_type: 2
+                    - id: 3
+                      category_name: 交通費
+                      color_type: 3
+                    - id: 4
+                      category_name: 遊び
+                      color_type: 4
+                    - id: 5
+                      category_name: 雑費
+                      color_type: 5
+  # No.18 カテゴリ新規登録
+  /category/create:
+    post:
+      tags:
+        - category
+      summary: No.18 input category
+      description: No.18 カテゴリ新規登録
+      security:
+        - CookieAuth: []
+      parameters: []
+      requestBody:
+        description: リクエストパラメータ
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category_name:
+                  type: string
+                color_type:
+                  type: integer
+                  format: int64
+            example:
+              category_name: 勉強代
+              color_type: 6
+      responses:
+        '201':
+          description: カテゴリ新規登録成功
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Category'
+                example:
+                  - id: 6
+                    category_name: 勉強代
+                    color_type: 6
+  # カテゴリ情報更新
+  /category/{category_id}:
+    put:
+      tags:
+        - category
+      summary: No.19 update category
+      description: No.19 カテゴリ情報更新
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: category_id
+          in: path
+          description: カテゴリID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: リクエストパラメータ
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  format: int64
+                category_name:
+                  type: string
+                color_type:
+                  type: integer
+                  format: int64
+      responses:
+        '200':
+          description: カテゴリ情報更新成功
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Category'
+                example:
+                  - id: 6
+                    category_name: 勉強代
+                    color_type: 6
+    delete:
+      tags:
+        - category
+      summary: No.20 delete category
+      description: No.14 カテゴリ情報削除
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: category_id
+          in: path
+          description: カテゴリID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: カテゴリ情報削除成功
   # No.22 月の支出割合
   /month-rate/{month}:
     get:
@@ -764,6 +899,47 @@ components:
             category_name:
               type: string
               example: 食費
+    Categories:
+      type: object
+      required:
+        - category
+      properties:
+        data:
+          type: object
+          required:
+            - id
+            - category_name
+            - color_type
+          properties:
+            id:
+              type: integer
+              format: int64
+              example: 1
+            category_name:
+              type: string
+              example: 食費
+            color_type:
+              type: integer
+              format: int64
+              example: 1
+    Category:
+      type: object
+      required:
+        - id
+        - category_name
+        - color_type
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        category_name:
+          type: string
+          example: 食費
+        color_type:
+          type: integer
+          format: int64
+          example: 1
     MonthRate:
       type: object
       required:
@@ -819,6 +995,8 @@ tags:
     description: ダッシュボード関連のデータ
   - name: detail
     description: 日別の金額データ
+  - name: category
+    description: カテゴリ
   - name: month_rate
     description: 月の支出割合
   - name: line_graph
