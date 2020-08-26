@@ -608,7 +608,7 @@ paths:
                       category_name: 雑費
                       color_type: 5
                       money: 100
-  # No.22 月の支出割合
+  # No.23 年間の支出推移
   /line-graph/{date}:
     get:
       tags:
