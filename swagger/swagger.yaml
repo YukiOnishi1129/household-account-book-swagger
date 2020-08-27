@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Sample API
+  title: おおまか家計簿 API
   description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
   version: 1.0.0
 servers:
@@ -259,6 +259,27 @@ paths:
                   email: test@test.com
                   user_type: 1
                   main_user_id: 0
+  /change-password:
+    post:
+      tags:
+        - users
+      summary: No.25 change password
+      description: No25 パスワード変更
+      parameters: []
+      requestBody:
+        description: リクエストパラメータ
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+            example:
+              password: password
+      responses:
+        '204':
+          description: パスワード変更処理成功
   /logout:
     delete:
       tags:
