@@ -8,147 +8,31 @@ servers:
     description: ローカル開発用 API
 
 paths:
+  # No.1 ログイン
   /login:
     post:
       tags:
         - users
-      summary: No.2 login
-      description: No.2 ログイン
+      summary: No.1 ログイン
+      description: ログイン処理
       parameters: []
-      requestBody: # リクエストボディ
-        description: リクエストパラメータ
-        content:
-          application/json:
-            schema: # POSTするオブジェクト
-              $ref: '#/components/schemas/Login'
-            example:
-              email: test@test.com
-              password: password
-      responses:
-        '200':
-          description: Login成功
-          headers:
-            Set-Cookie:
-              schema:
-                type: string
-                example: development_session=abcde12345; Path=/; HttpOnly
-          content:
-            application/json:
-              schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/User'
-                example:
-                  id: 1
-                  name: やすお
-                  email: test@test.com
-                  user_type: 1
-                  main_user_id: 0
-  /partner-login:
-    post:
-      tags:
-        - users
-      summary: No.4 partner login
-      description: No.4 パートナーログイン
-      parameters: []
-      requestBody: # リクエストボディ
-        description: リクエストパラメータ
-        content:
-          application/json:
-            schema: # POSTするオブジェクト
-              $ref: '#/components/schemas/Login'
-            example:
-              email: test@test.com
-              password: password
-      responses:
-        '200':
-          description: PartnerLogin成功
-          headers:
-            Set-Cookie:
-              schema:
-                type: string
-                example: development_session=abcde12345; Path=/; HttpOnly
-          content:
-            application/json:
-              schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/User'
-                example:
-                  id: 1
-                  name: やすおのパートナー
-                  email: partner@test.com
-                  user_type: 2
-                  main_user_id: 1
-  /trial-login:
-    post:
-      tags:
-        - users
-      summary: No.30 trial login
-      description: No.30 トライアルログイン
-      parameters: []
-      requestBody: # リクエストボディ
-        description: リクエストパラメータ
-        content:
-          application/json:
-            schema: # POSTするオブジェクト
-              $ref: '#/components/schemas/Login'
-            example:
-              email: test@test.com
-              password: password
-      responses:
-        '200':
-          description: TrialLogin成功
-          headers:
-            Set-Cookie:
-              schema:
-                type: string
-                example: development_session=abcde12345; Path=/; HttpOnly
-          content:
-            application/json:
-              schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/User'
-                example:
-                  id: 1
-                  name: お試しマン
-                  email: otameshi@test.com
-                  user_type: 3
-                  main_user_id: 0
-  /logout:
-    delete:
-      tags:
-        - users
-      summary: No.7 logout
-      description: No.7 ログアウト
-      parameters: []
-      responses:
-        '204':
-          description: ログアウト成功
-  /auth:
-    post:
-      tags:
-        - users
-      summary: No.29 auth rooting
-      description: No29 認証ルーティング
-      security:
-        - CookieAuth: []
       requestBody:
         description: リクエストパラメータ
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                id:
-                  type: integer
-                  format: int64
-              example:
-                id: 1
+              $ref: '#/components/schemas/Login'
+            example:
+              email: test@test.com
+              password: password
       responses:
         '200':
-          description: 認証成功
+          description: ログイン成功
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: development_session=abcde12345; Path=/; HttpOnly
           content:
             application/json:
               schema:
@@ -161,26 +45,20 @@ paths:
                   email: test@test.com
                   user_type: 1
                   main_user_id: 0
+  # No.2 会員登録
   /register:
     post:
       tags:
         - users
-      summary: No.3 register
-      description: No3 会員登録
+      summary: No.2 会員登録
+      description: 会員登録処理
       parameters: []
       requestBody:
         description: リクエストパラメータ
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                password:
-                  type: string
+              $ref: '#/components/schemas/Register'
             example:
               name: やすお
               email: test@test.com
@@ -205,12 +83,123 @@ paths:
                   email: test@test.com
                   user_type: 1
                   main_user_id: 0
+  # No.3 パートナーログイン
+  /partner-login:
+    post:
+      tags:
+        - users
+      summary: No.3 パートナーログイン
+      description: パートナーユーザーによるログイン処理
+      parameters: []
+      requestBody:
+        description: リクエストパラメータ
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+            example:
+              email: test@test.com
+              password: password
+      responses:
+        '200':
+          description: パートナーユーザーによるログイン成功
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: development_session=abcde12345; Path=/; HttpOnly
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/User'
+                example:
+                  id: 1
+                  name: やすおのパートナー
+                  email: partner@test.com
+                  user_type: 2
+                  main_user_id: 1
+  # N0.4 お試しログイン
+  /trial-login:
+    post:
+      tags:
+        - users
+      summary: No.4 お試しログイン
+      description: お試しユーザーによるログイン処理
+      parameters: []
+      requestBody:
+        description: リクエストパラメータ
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+            example:
+              email: test@test.com
+              password: password
+      responses:
+        '200':
+          description: お試しユーザーによるログイン成功
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: development_session=abcde12345; Path=/; HttpOnly
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/User'
+                example:
+                  id: 1
+                  name: お試しマン
+                  email: otameshi@test.com
+                  user_type: 3
+                  main_user_id: 0
+  # No.5 認証ルーティング
+  /auth:
+    get:
+      tags:
+        - users
+      summary: No.5 認証ルーティング
+      description: 認証ルーティング
+      security:
+        - CookieAuth: []
+      parameters: []
+      responses:
+        '200':
+          description: 認証成功
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/User'
+                example:
+                  id: 1
+                  name: やすお
+                  email: test@test.com
+                  user_type: 1
+                  main_user_id: 0
+  # No.6 ログアウト
+  /logout:
+    delete:
+      tags:
+        - users
+      summary: No.6 ログアウト
+      description: ログアウト処理
+      parameters: []
+      responses:
+        '204':
+          description: ログアウト成功
+  # No.7 パスワードリマインド(アドレス送信)
   /remaind-mail:
     post:
       tags:
         - users
-      summary: No.5 password remaind email
-      description: No5 パスワードリマインド アドレス送信
+      summary: No.7 パスワードリマインド(アドレス送信)
+      description: パスワードリマインド アドレス送信
       parameters: []
       requestBody:
         description: リクエストパラメータ
@@ -226,13 +215,14 @@ paths:
               email: test@test.com
       responses:
         '204':
-          description: パスワードリマインドメール送信成功
+          description: パスワードリマインド アドレス送信成功
+  # No.8 パスワードリマインド(キー送信)
   /remaind-key:
     post:
       tags:
         - users
-      summary: No.6 password remaind key
-      description: No6 パスワードリマインド キー送信
+      summary: No.8 パスワードリマインド(キー送信)
+      description: パスワードリマインド キー送信
       parameters: []
       requestBody:
         description: リクエストパラメータ
@@ -269,12 +259,13 @@ paths:
                   email: test@test.com
                   user_type: 1
                   main_user_id: 0
+  # No.9 パスワード変更
   /change-password:
     post:
       tags:
         - users
-      summary: No.25 change password
-      description: No25 パスワード変更
+      summary: No.9 パスワード変更
+      description: パスワード変更処理
       parameters: []
       requestBody:
         description: リクエストパラメータ
@@ -828,7 +819,7 @@ components:
       name: development_session
   schemas: # スキーマオブジェクトの定義
     Login:
-      description: 'ログイン'
+      description: ログイン時のリクエストデータ
       type: object
       required:
         - email
@@ -842,26 +833,53 @@ components:
           title: 'パスワード'
           type: string
           format: password
-    User: # モデル名
-      type: object # 型
-      required: # 必須フィールド
+    User:
+      description: ユーザー情報
+      type: object
+      required:
         - id
       properties:
-        id: # プロパティ名
-          type: integer # 型
-          format: int64 # フォーマット(int32, int64等)
+        id:
+          title: 'ユーザーID'
+          type: integer
+          format: int64
         name:
+          title: '氏名'
           type: string
         email:
+          title: 'メールアドレス'
           type: string
         password:
+          title: 'パスワード'
           type: string
         user_type:
+          title: 'ユーザータイプ'
           type: integer
           format: int64
         main_user_id:
+          title: 'メインユーザーID'
           type: integer
           format: int64
+    Register:
+      description: 会員登録時のリクエストデータ
+      type: object
+      required:
+        - name
+        - email
+        - password
+      properties:
+        name:
+          title: 'パートナー'
+          type: string
+          example: 'sample@example.com'
+        email:
+          title: 'メールアドレス'
+          type: string
+          example: 'sample@example.com'
+        password:
+          title: 'パスワード'
+          type: string
+          format: password
     Calendar:
       type: object
       required:
@@ -1053,7 +1071,7 @@ components:
 
 tags:
   - name: users
-    description: ユーザー情報観点
+    description: ユーザー情報
   - name: calendar
     description: ダッシュボード関連のデータ
   - name: detail
