@@ -816,6 +816,94 @@ paths:
                       sum_money: 20000
                     - month: 20200501
                       sum_money: 30000
+  # No26 パートナーユーザー取得
+  /partner:
+    get:
+      tags:
+        - partner
+      summary: No.26 get partner user
+      description: No26 パートナーユーザー取得
+      parameters: []
+      responses:
+        '200':
+          description: パートナーユーザー取得成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Partners'
+                example:
+                  data:
+                    - id: 4
+                      name: パートナー1
+                      email: partner@gmail.com
+                    - id: 5
+                      name: パートナー2
+                      email: partner2@gmail.com
+                    - id: 6
+                      name: パートナー3
+                      email: partner3@gmail.com
+  # No.27 パートナーユーザー登録
+  /partner/create:
+    post:
+      tags:
+        - partner
+      summary: No.27 create partner
+      description: No.27 パートナーユーザー登録
+      security:
+        - CookieAuth: []
+      parameters: []
+      requestBody:
+        description: リクエストパラメータ
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  format: int64
+                name:
+                  type: string
+                email:
+                  type: string
+            example:
+              user_id: 4
+              name: パートナー
+              email: partner@gmail.com
+      responses:
+        '201':
+          description: パートナーユーザー登録成功
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Partner'
+                example:
+                  - user_id: 6
+                    name: パートナー
+                    email: partner@gmail.com
+  # No.28 パートナーユーザー削除
+  /partner/{user_id}:
+    delete:
+      tags:
+        - partner
+      summary: No.28 delete category
+      description: No.28 パートナーユーザー削除
+      security:
+        - CookieAuth: []
+      parameters:
+        - name: user_id
+          in: path
+          description: カテゴリID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: パートナーユーザー削除成功
 
 components:
   securitySchemes:
@@ -923,7 +1011,7 @@ components:
     Categories:
       type: object
       required:
-        - category
+        - data
       properties:
         data:
           type: object
@@ -964,9 +1052,9 @@ components:
     MonthRate:
       type: object
       required:
-        - category_money
+        - data
       properties:
-        category_money:
+        data:
           type: object
           required:
             - category_id
@@ -992,7 +1080,7 @@ components:
     LineGraph:
       type: object
       required:
-        - category_money
+        - data
       properties:
         data:
           type: object
@@ -1008,6 +1096,45 @@ components:
               type: integer
               format: int64
               example: 100000
+    Partners:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - id
+            - name
+            - email
+          properties:
+            id:
+              type: integer
+              format: int64
+              example: 4
+            name:
+              type: string
+              example: パートナーさん
+            email:
+              type: string
+              example: partner@gmail.com
+    Partner:
+      type: object
+      required:
+        - id
+        - name
+        - email
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 4
+        name:
+          type: string
+          example: パートナーさん
+        email:
+          type: string
+          example: partner@gmail.com
 
 tags:
   - name: users
@@ -1022,3 +1149,5 @@ tags:
     description: 月の支出割合
   - name: line_graph
     description: 年間の支出推移
+  - name: partner
+    description: パートナー情報
