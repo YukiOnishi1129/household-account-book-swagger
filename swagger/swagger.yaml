@@ -281,13 +281,13 @@ paths:
       responses:
         '204':
           description: パスワード変更処理成功
-
+  # No.10 カレンダー情報取得
   /calendar/{year_and_month}:
     get:
       tags:
         - calendar
-      summary: No.8 get calendar
-      description: No.8 カレンダー情報取得
+      summary: No.10 カレンダー情報取得
+      description: カレンダー情報取得
       security:
         - CookieAuth: []
       parameters:
@@ -1073,7 +1073,7 @@ tags:
   - name: users
     description: ユーザー情報
   - name: calendar
-    description: ダッシュボード関連のデータ
+    description: 月別の金額データ
   - name: detail
     description: 日別の金額データ
   - name: category
