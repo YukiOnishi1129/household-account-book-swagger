@@ -116,6 +116,16 @@ paths:
                   email: otameshi@test.com
                   user_type: 3
                   main_user_id: 0
+  /logout:
+    delete:
+      tags:
+        - users
+      summary: No.7 logout
+      description: No.7 ログアウト
+      parameters: []
+      responses:
+        '204':
+          description: ログアウト成功
   /auth:
     post:
       tags:
@@ -280,101 +290,6 @@ paths:
       responses:
         '204':
           description: パスワード変更処理成功
-  /logout:
-    delete:
-      tags:
-        - users
-      summary: No.7 logout
-      description: No.7 ログアウト
-      parameters: []
-      responses:
-        '204':
-          description: ログアウト成功
-
-  # paths オブジェクト
-  /users:
-    # path item オブジェクト
-    get: # GET
-      # Operationオブジェクト
-      tags:
-        - users
-      summary: Get all users.
-      description: Returns an array of User model
-      parameters: []
-      responses: # レスポンス定義
-        '200': # HTTP status
-          description: A JSON array of User model
-          content:
-            application/json: # レスポンスの形式指定
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User' # 参照するモデル
-                example: # サンプルデータ
-                  - id: 1
-                    name: John Doe
-                  - id: 2
-                    name: Jane Doe
-    post: # POST
-      tags:
-        - users
-      summary: Create a new User
-      description: Create a new User
-      parameters: []
-      requestBody: # リクエストボディ
-        description: user to create
-        content:
-          application/json:
-            schema: # POSTするオブジェクト
-              $ref: '#/components/schemas/User'
-            example:
-              id: 3
-              name: Richard Roe
-      responses:
-        '201':
-          description: CREATED
-  /users/{userId}:
-    get:
-      tags:
-        - users
-      summary: Get user
-      description: user情報取得
-      parameters: # リクエストパラメータ
-        - name: userId
-          in: path # パラメータをパス内に含める
-          description: user id
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: user情報取得成功
-          content:
-            application/json:
-              schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/User'
-                example:
-                  id: 1
-                  name: test@test.com
-                  user_type: 1
-                  main_user_id: 0
-    delete:
-      tags:
-        - users
-      summary: Get user
-      description: user情報取得
-      parameters: # リクエストパラメータ
-        - name: userId
-          in: path # パラメータをパス内に含める
-          description: user id
-          required: true
-          schema:
-            type: integer
-      responses:
-        '204':
-          description: user情報取得成功
 
   /calendar/{year_and_month}:
     get:
