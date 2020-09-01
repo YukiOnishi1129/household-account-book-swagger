@@ -499,6 +499,7 @@ paths:
         - category
       summary: No.15 カテゴリ情報取得
       description: カテゴリ情報取得
+      operationId: get-categories
       security:
         - CookieAuth: []
       parameters: []
@@ -508,26 +509,25 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                type: array
                 items:
-                  $ref: '#/components/schemas/Categories'
+                  $ref: '#/components/schemas/Category'
                 example:
-                  data:
-                    - id: 1
-                      category_name: 食費
-                      color_type: 1
-                    - id: 2
-                      category_name: 衣服
-                      color_type: 2
-                    - id: 3
-                      category_name: 交通費
-                      color_type: 3
-                    - id: 4
-                      category_name: 遊び
-                      color_type: 4
-                    - id: 5
-                      category_name: 雑費
-                      color_type: 5
+                  - id: 1
+                    category_name: 食費
+                    color_type: 1
+                  - id: 2
+                    category_name: 衣服
+                    color_type: 2
+                  - id: 3
+                    category_name: 交通費
+                    color_type: 3
+                  - id: 4
+                    category_name: 遊び
+                    color_type: 4
+                  - id: 5
+                    category_name: 雑費
+                    color_type: 5
   # No.16 カテゴリ新規登録
   /category/create:
     post:
