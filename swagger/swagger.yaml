@@ -917,36 +917,10 @@ components:
               example: 200
     Details:
       type: object
-      required:
-        - data
       properties:
         data:
           type: object
-          required:
-            - id
-            - money
-            - img_file
-            - category_id
-            - category_name
-          properties:
-            id:
-              type: integer
-              format: int64
-              example: 1
-            money:
-              type: integer
-              format: int64
-              example: 200
-            img_file:
-              type: string
-              example: xxx.jpg
-            category_id:
-              type: integer
-              format: int64
-              example: 1
-            category_name:
-              type: string
-              example: 食費
+          $ref: '#/components/schemas/Detail'
     Detail:
       type: object
       required:
@@ -976,27 +950,10 @@ components:
           example: 食費
     Categories:
       type: object
-      required:
-        - data
       properties:
         data:
           type: object
-          required:
-            - id
-            - category_name
-            - color_type
-          properties:
-            id:
-              type: integer
-              format: int64
-              example: 1
-            category_name:
-              type: string
-              example: 食費
-            color_type:
-              type: integer
-              format: int64
-              example: 1
+          $ref: '#/components/schemas/Category'
     Category:
       type: object
       required:
@@ -1064,26 +1021,10 @@ components:
               example: 100000
     Partners:
       type: object
-      required:
-        - data
       properties:
         data:
           type: object
-          required:
-            - id
-            - name
-            - email
-          properties:
-            id:
-              type: integer
-              format: int64
-              example: 4
-            name:
-              type: string
-              example: パートナーさん
-            email:
-              type: string
-              example: partner@gmail.com
+          $ref: '#/components/schemas/Partner'
     Partner:
       type: object
       required:
