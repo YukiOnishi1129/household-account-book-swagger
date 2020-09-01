@@ -677,10 +677,10 @@ paths:
                       color_type: 5
                       money: 100
   # No.20 年間の支出推移取得
-  /line-graph/{date}:
+  /annual_change/{date}:
     get:
       tags:
-        - line_graph
+        - annual_change
       summary: No.20 年間の支出推移取得
       description: 年間の支出推移
       security:
@@ -701,7 +701,7 @@ paths:
               schema:
                 type: object
                 items:
-                  $ref: '#/components/schemas/LineGraph'
+                  $ref: '#/components/schemas/AnnualChange'
                 example:
                   data:
                     - month: 20190601
@@ -1000,7 +1000,7 @@ components:
               type: integer
               format: int64
               example: 200
-    LineGraph:
+    AnnualChange:
       type: object
       required:
         - data
@@ -1054,7 +1054,7 @@ tags:
     description: カテゴリ
   - name: month_rate
     description: 月の支出割合
-  - name: line_graph
+  - name: annual_change
     description: 年間の支出推移
   - name: partner
     description: パートナー情報
