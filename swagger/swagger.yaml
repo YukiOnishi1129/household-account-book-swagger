@@ -677,10 +677,10 @@ paths:
                       color_type: 5
                       money: 100
   # No.20 年間の支出推移取得
-  /line-graph/{date}:
+  /annual_change/{date}:
     get:
       tags:
-        - line_graph
+        - annual_change
       summary: No.20 年間の支出推移取得
       description: 年間の支出推移
       security:
@@ -701,7 +701,7 @@ paths:
               schema:
                 type: object
                 items:
-                  $ref: '#/components/schemas/LineGraph'
+                  $ref: '#/components/schemas/AnnualChange'
                 example:
                   data:
                     - month: 20190601
@@ -917,36 +917,10 @@ components:
               example: 200
     Details:
       type: object
-      required:
-        - data
       properties:
         data:
           type: object
-          required:
-            - id
-            - money
-            - img_file
-            - category_id
-            - category_name
-          properties:
-            id:
-              type: integer
-              format: int64
-              example: 1
-            money:
-              type: integer
-              format: int64
-              example: 200
-            img_file:
-              type: string
-              example: xxx.jpg
-            category_id:
-              type: integer
-              format: int64
-              example: 1
-            category_name:
-              type: string
-              example: 食費
+          $ref: '#/components/schemas/Detail'
     Detail:
       type: object
       required:
@@ -976,27 +950,10 @@ components:
           example: 食費
     Categories:
       type: object
-      required:
-        - data
       properties:
         data:
           type: object
-          required:
-            - id
-            - category_name
-            - color_type
-          properties:
-            id:
-              type: integer
-              format: int64
-              example: 1
-            category_name:
-              type: string
-              example: 食費
-            color_type:
-              type: integer
-              format: int64
-              example: 1
+          $ref: '#/components/schemas/Category'
     Category:
       type: object
       required:
@@ -1043,7 +1000,7 @@ components:
               type: integer
               format: int64
               example: 200
-    LineGraph:
+    AnnualChange:
       type: object
       required:
         - data
@@ -1064,26 +1021,10 @@ components:
               example: 100000
     Partners:
       type: object
-      required:
-        - data
       properties:
         data:
           type: object
-          required:
-            - id
-            - name
-            - email
-          properties:
-            id:
-              type: integer
-              format: int64
-              example: 4
-            name:
-              type: string
-              example: パートナーさん
-            email:
-              type: string
-              example: partner@gmail.com
+          $ref: '#/components/schemas/Partner'
     Partner:
       type: object
       required:
@@ -1113,7 +1054,7 @@ tags:
     description: カテゴリ
   - name: month_rate
     description: 月の支出割合
-  - name: line_graph
+  - name: annual_change
     description: 年間の支出推移
   - name: partner
     description: パートナー情報
