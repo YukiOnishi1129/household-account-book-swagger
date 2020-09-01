@@ -311,18 +311,18 @@ paths:
                 items:
                   $ref: '#/components/schemas/Calendar'
                 example:
-                  money_date: 20200501
+                  date: 20200501
                   sum_month_money: 20000
-                  sum_days_money:
-                    - days: 20200501
+                  sum_date_money:
+                    - date: 20200501
                       money: 3200
-                    - days: 20200502
+                    - date: 20200502
                       money: 100
-                    - days: 20200503
+                    - date: 20200503
                       money: 3500
-                    - days: 20200504
+                    - date: 20200504
                       money: 4200
-                    - days: 20200505
+                    - date: 20200505
                       money: 300
   # No.11 日別の金額情報取得
   /detail/{date}:
@@ -349,9 +349,9 @@ paths:
               schema:
                 type: object
                 items:
-                  $ref: '#/components/schemas/Detail'
+                  $ref: '#/components/schemas/Details'
                 example:
-                  details:
+                  data:
                     - id: 1
                       money: 2000
                       img_file: xxx.jpg
@@ -420,12 +420,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/Detail'
                 example:
-                  details:
-                    - id: 1
-                      money: 2000
-                      img_file: xxx.jpg
-                      category_id: 1
-                      category_name: 食費
+                  id: 1
+                  money: 2000
+                  img_file: xxx.jpg
+                  category_id: 1
+                  category_name: 食費
   # No.13 金額情報編集
   /detail/{money_id}:
     put:
@@ -470,12 +469,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/Detail'
                 example:
-                  details:
-                    - id: 1
-                      money: 2000
-                      category_id: 1
-                      img_file: xxx.jpg
-                      category_name: 食費
+                  id: 1
+                  money: 2000
+                  category_id: 1
+                  img_file: xxx.jpg
+                  category_name: 食費
     # No.14 金額情報削除
     delete:
       tags:
@@ -657,7 +655,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/MonthRate'
                 example:
-                  category_money:
+                  data:
                     - category_id: 1
                       category_name: 食費
                       color_type: 1
@@ -891,11 +889,11 @@ components:
     Calendar:
       type: object
       required:
-        - money_date
+        - date
         - sum_month_money
-        - sum_days_money
+        - sum_date_money
       properties:
-        money_date:
+        date:
           type: string
           format: date
           example: 20200501
@@ -903,13 +901,13 @@ components:
           type: integer
           format: int64
           example: 2000
-        sum_days_money:
+        sum_date_money:
           type: object
           required:
-            - days
+            - date
             - money
           properties:
-            days:
+            date:
               type: string
               format: date
               example: 20200501
@@ -917,12 +915,12 @@ components:
               type: integer
               format: int64
               example: 200
-    Detail:
+    Details:
       type: object
       required:
-        - details
+        - data
       properties:
-        details:
+        data:
           type: object
           required:
             - id
@@ -949,6 +947,33 @@ components:
             category_name:
               type: string
               example: 食費
+    Detail:
+      type: object
+      required:
+        - id
+        - money
+        - img_file
+        - category_id
+        - category_name
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        money:
+          type: integer
+          format: int64
+          example: 200
+        img_file:
+          type: string
+          example: xxx.jpg
+        category_id:
+          type: integer
+          format: int64
+          example: 1
+        category_name:
+          type: string
+          example: 食費
     Categories:
       type: object
       required:
