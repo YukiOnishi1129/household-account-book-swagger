@@ -18,16 +18,14 @@ paths:
         - users
       summary: No.1 ログイン
       description: ログイン処理
+      operationId: login
       parameters: []
       requestBody:
         description: リクエストパラメータ
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Login'
-            example:
-              email: test@test.com
-              password: password
+              $ref: '#/components/schemas/RequestLogin'
       responses:
         '200':
           description: ログイン成功
@@ -39,15 +37,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/User'
-                example:
-                  id: 1
-                  name: やすお
-                  email: test@test.com
-                  user_type: 1
-                  main_user_id: 0
+                $ref: '#/components/schemas/User'
   # No.2 会員登録
   /register:
     post:
@@ -55,17 +45,14 @@ paths:
         - users
       summary: No.2 会員登録
       description: 会員登録処理
+      operationId: register
       parameters: []
       requestBody:
         description: リクエストパラメータ
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Register'
-            example:
-              name: やすお
-              email: test@test.com
-              password: password
+              $ref: '#/components/schemas/RequestRegister'
       responses:
         '201':
           description: 会員登録成功
@@ -77,15 +64,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/User'
-                example:
-                  id: 1
-                  name: やすお
-                  email: test@test.com
-                  user_type: 1
-                  main_user_id: 0
+                $ref: '#/components/schemas/User'
   # No.3 パートナーログイン
   /partner-login:
     post:
@@ -93,16 +72,14 @@ paths:
         - users
       summary: No.3 パートナーログイン
       description: パートナーユーザーによるログイン処理
+      operationId: partner-login
       parameters: []
       requestBody:
         description: リクエストパラメータ
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Login'
-            example:
-              email: test@test.com
-              password: password
+              $ref: '#/components/schemas/RequestLogin'
       responses:
         '200':
           description: パートナーユーザーによるログイン成功
@@ -114,13 +91,11 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/User'
                 example:
                   id: 1
-                  name: やすおのパートナー
-                  email: partner@test.com
+                  name: 'やすおのパートナー'
+                  email: 'partner@test.com'
                   user_type: 2
                   main_user_id: 1
   # N0.4 お試しログイン
@@ -130,16 +105,14 @@ paths:
         - users
       summary: No.4 お試しログイン
       description: お試しユーザーによるログイン処理
+      operationId: try-login
       parameters: []
       requestBody:
         description: リクエストパラメータ
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Login'
-            example:
-              email: test@test.com
-              password: password
+              $ref: '#/components/schemas/RequestLogin'
       responses:
         '200':
           description: お試しユーザーによるログイン成功
@@ -151,13 +124,11 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/User'
                 example:
                   id: 1
-                  name: お試しマン
-                  email: otameshi@test.com
+                  name: 'お試しマン'
+                  email: 'otameshi@test.com'
                   user_type: 3
                   main_user_id: 0
   # No.5 認証ルーティング
@@ -167,6 +138,7 @@ paths:
         - users
       summary: No.5 認証ルーティング
       description: 認証ルーティング
+      operationId: auth-rooting
       security:
         - CookieAuth: []
       parameters: []
@@ -176,13 +148,11 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/User'
                 example:
                   id: 1
-                  name: やすお
-                  email: test@test.com
+                  name: 'やすお'
+                  email: 'test@test.com'
                   user_type: 1
                   main_user_id: 0
   # No.6 ログアウト
@@ -192,56 +162,44 @@ paths:
         - users
       summary: No.6 ログアウト
       description: ログアウト処理
+      operationId: logout
       parameters: []
       responses:
         '204':
           description: ログアウト成功
   # No.7 パスワードリマインド(アドレス送信)
-  /remaind-mail:
+  /remind-mail:
     post:
       tags:
         - users
       summary: No.7 パスワードリマインド(アドレス送信)
       description: パスワードリマインド アドレス送信
+      operationId: remind-email
       parameters: []
       requestBody:
         description: リクエストパラメータ
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                email:
-                  type: integer
-                  format: int64
-            example:
-              email: test@test.com
+              $ref: '#/components/schemas/RequestRemindMail'
       responses:
         '204':
           description: パスワードリマインド アドレス送信成功
   # No.8 パスワードリマインド(キー送信)
-  /remaind-key:
+  /remind-key:
     post:
       tags:
         - users
       summary: No.8 パスワードリマインド(キー送信)
       description: パスワードリマインド キー送信
+      operationId: remind-key
       parameters: []
       requestBody:
         description: リクエストパラメータ
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                id:
-                  type: integer
-                  format: int64
-                auth_key:
-                  type: string
-            example:
-              id: 1
-              auth_key: hfjavoh
+              $ref: '#/components/schemas/RequestRemindMail'
       responses:
         '201':
           description: パスワードリマインド 変更成功
@@ -253,15 +211,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/User'
-                example:
-                  id: 1
-                  name: やすお
-                  email: test@test.com
-                  user_type: 1
-                  main_user_id: 0
+                $ref: '#/components/schemas/User'
   # No.9 パスワード変更
   /change-password:
     post:
@@ -269,18 +219,16 @@ paths:
         - users
       summary: No.9 パスワード変更
       description: パスワード変更処理
+      operationId: change-password
+      security:
+        - CookieAuth: []
       parameters: []
       requestBody:
         description: リクエストパラメータ
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                password:
-                  type: string
-            example:
-              password: password
+              $ref: '#/components/schemas/RequestRemindKey'
       responses:
         '204':
           description: パスワード変更処理成功
@@ -291,6 +239,7 @@ paths:
         - calendar
       summary: No.10 カレンダー情報取得
       description: カレンダー情報取得
+      operationId: get-calender
       security:
         - CookieAuth: []
       parameters:
@@ -307,23 +256,21 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/Calendar'
+                $ref: '#/components/schemas/Calendar'
                 example:
-                  date: 20200501
-                  sum_month_money: 20000
-                  sum_date_money:
-                    - date: 20200501
-                      money: 3200
-                    - date: 20200502
-                      money: 100
-                    - date: 20200503
-                      money: 3500
-                    - date: 20200504
-                      money: 4200
-                    - date: 20200505
-                      money: 300
+                  - date: '20200501'
+                    sum_month_money: 20000
+                    sum_date_money:
+                      - date: '20200501'
+                        money: 3200
+                      - date: '20200502'
+                        money: 100
+                      - date: '20200503'
+                        money: 3500
+                      - date: '20200504'
+                        money: 4200
+                      - date: '20200505'
+                        money: 300
   # No.11 日別の金額情報取得
   /detail/{date}:
     get:
@@ -410,7 +357,7 @@ paths:
               category_id: 1
               money: 200
               img_file: xxx.jpg
-              date: 20200501
+              date: '20200501'
       responses:
         '201':
           description: 金額入力成功
@@ -641,6 +588,7 @@ paths:
         - month_rate
       summary: No.19 月のカテゴリ別支出金額取得
       description: 月のカテゴリ別支出金額取得
+      operationId: get-month-rate
       security:
         - CookieAuth: []
       parameters:
@@ -657,31 +605,30 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                type: array
                 items:
                   $ref: '#/components/schemas/MonthRate'
                 example:
-                  data:
-                    - category_id: 1
-                      category_name: 食費
-                      color_type: 1
-                      money: 3000
-                    - category_id: 2
-                      category_name: 衣服
-                      color_type: 2
-                      money: 300
-                    - category_id: 3
-                      category_name: 交通費
-                      color_type: 3
-                      money: 4000
-                    - category_id: 4
-                      category_name: 遊び
-                      color_type: 4
-                      money: 500
-                    - category_id: 5
-                      category_name: 雑費
-                      color_type: 5
-                      money: 100
+                  - category_id: 1
+                    category_name: 食費
+                    color_type: 1
+                    money: 3000
+                  - category_id: 2
+                    category_name: 衣服
+                    color_type: 2
+                    money: 300
+                  - category_id: 3
+                    category_name: 交通費
+                    color_type: 3
+                    money: 4000
+                  - category_id: 4
+                    category_name: 遊び
+                    color_type: 4
+                    money: 500
+                  - category_id: 5
+                    category_name: 雑費
+                    color_type: 5
+                    money: 100
   # No.20 年間の支出推移取得
   /annual_change/{date}:
     get:
@@ -689,6 +636,7 @@ paths:
         - annual_change
       summary: No.20 年間の支出推移取得
       description: 年間の支出推移
+      operationId: get-annual-change
       security:
         - CookieAuth: []
       parameters:
@@ -705,35 +653,34 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                type: array
                 items:
                   $ref: '#/components/schemas/AnnualChange'
                 example:
-                  data:
-                    - month: 20190601
-                      sum_money: 30000
-                    - month: 20190701
-                      sum_money: 20000
-                    - month: 20190801
-                      sum_money: 40000
-                    - month: 20190901
-                      sum_money: 132000
-                    - month: 20191001
-                      sum_money: 140000
-                    - month: 20191101
-                      sum_money: 100000
-                    - month: 20191201
-                      sum_money: 100000
-                    - month: 20200101
-                      sum_money: 50000
-                    - month: 20200201
-                      sum_money: 60000
-                    - month: 20200301
-                      sum_money: 90000
-                    - month: 20200401
-                      sum_money: 20000
-                    - month: 20200501
-                      sum_money: 30000
+                  - month: '20190601'
+                    sum_money: 30000
+                  - month: '20190701'
+                    sum_money: 20000
+                  - month: '20190801'
+                    sum_money: 40000
+                  - month: '20190901'
+                    sum_money: 132000
+                  - month: '20191001'
+                    sum_money: 140000
+                  - month: '20191101'
+                    sum_money: 100000
+                  - month: '20191201'
+                    sum_money: 100000
+                  - month: '20200101'
+                    sum_money: 50000
+                  - month: '20200201'
+                    sum_money: 60000
+                  - month: '20200301'
+                    sum_money: 90000
+                  - month: '20200401'
+                    sum_money: 20000
+                  - month: '20200501'
+                    sum_money: 30000
   # No21 パートナーユーザー取得
   /partner:
     get:
@@ -741,6 +688,9 @@ paths:
         - partner
       summary: No.21 パートナーユーザー取得
       description: パートナーユーザー取得
+      operationId: get-partners
+      security:
+        - CookieAuth: []
       parameters: []
       responses:
         '200':
@@ -750,18 +700,17 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Partners'
+                  $ref: '#/components/schemas/Partner'
                 example:
-                  data:
-                    - id: 4
-                      name: パートナー1
-                      email: partner@gmail.com
-                    - id: 5
-                      name: パートナー2
-                      email: partner2@gmail.com
-                    - id: 6
-                      name: パートナー3
-                      email: partner3@gmail.com
+                  - id: 4
+                    name: パートナー1
+                    email: partner@gmail.com
+                  - id: 5
+                    name: パートナー2
+                    email: partner2@gmail.com
+                  - id: 6
+                    name: パートナー3
+                    email: partner3@gmail.com
   # No.22 パートナーユーザー登録
   /partner/create:
     post:
@@ -769,6 +718,7 @@ paths:
         - partner
       summary: No.22 パートナーユーザー登録
       description: パートナーユーザー登録
+      operationId: add-partner
       security:
         - CookieAuth: []
       parameters: []
@@ -810,6 +760,7 @@ paths:
         - partner
       summary: No.23 パートナーユーザー削除
       description: パートナーユーザー削除
+      operationId: delete-partner
       security:
         - CookieAuth: []
       parameters:
@@ -830,7 +781,36 @@ components:
       in: cookie
       name: development_session
   schemas: # スキーマオブジェクトの定義
-    Login:
+    User:
+      description: ユーザー情報
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          title: 'ユーザーID'
+          type: integer
+          format: int64
+          example: 1
+        name:
+          title: '氏名'
+          type: string
+          example: 'やすお'
+        email:
+          title: 'メールアドレス'
+          type: string
+          example: 'test@test.com'
+        user_type:
+          title: 'ユーザータイプ'
+          type: integer
+          format: int64
+          example: 1
+        main_user_id:
+          title: 'メインユーザーID'
+          type: integer
+          format: int64
+          example: 0
+    RequestLogin:
       description: ログイン時のリクエストデータ
       type: object
       required:
@@ -845,34 +825,8 @@ components:
           title: 'パスワード'
           type: string
           format: password
-    User:
-      description: ユーザー情報
-      type: object
-      required:
-        - id
-      properties:
-        id:
-          title: 'ユーザーID'
-          type: integer
-          format: int64
-        name:
-          title: '氏名'
-          type: string
-        email:
-          title: 'メールアドレス'
-          type: string
-        password:
-          title: 'パスワード'
-          type: string
-        user_type:
-          title: 'ユーザータイプ'
-          type: integer
-          format: int64
-        main_user_id:
-          title: 'メインユーザーID'
-          type: integer
-          format: int64
-    Register:
+          example: 'password'
+    RequestRegister:
       description: 会員登録時のリクエストデータ
       type: object
       required:
@@ -883,7 +837,7 @@ components:
         name:
           title: 'パートナー'
           type: string
-          example: 'sample@example.com'
+          example: 'やすお'
         email:
           title: 'メールアドレス'
           type: string
@@ -892,6 +846,37 @@ components:
           title: 'パスワード'
           type: string
           format: password
+          example: 'password'
+    RequestRemindMail:
+      description: パスワードリマインド(アドレス送信)のリクエストデータ
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          title: 'メールアドレス'
+          type: string
+          example: 'sample@example.com'
+    RequestRemindKey:
+      description: パスワードリマインド(キー送信)のリクエストデータ
+      type: object
+      required:
+        - auth_key
+      properties:
+        auth_key:
+          title: '認証キー'
+          type: string
+          example: 'hfjavoh'
+    RequestChangePassword:
+      description: パパスワード変更のリクエストデータ
+      type: object
+      required:
+        - password
+      properties:
+        password:
+          title: 'パスワード'
+          type: string
+          example: 'password'
     Calendar:
       type: object
       required:
@@ -908,19 +893,23 @@ components:
           format: int64
           example: 2000
         sum_date_money:
-          type: object
-          required:
-            - date
-            - money
-          properties:
-            date:
-              type: string
-              format: date
-              example: 20200501
-            money:
-              type: integer
-              format: int64
-              example: 200
+          type: array
+          items:
+            $ref: '#/components/schemas/SumDateMoney'
+    SumDateMoney:
+      type: object
+      required:
+        - date
+        - money
+      properties:
+        date:
+          type: string
+          format: date
+          example: '20200501'
+        money:
+          type: integer
+          format: int64
+          example: 200
     Detail:
       type: object
       required:
@@ -969,56 +958,40 @@ components:
     MonthRate:
       type: object
       required:
-        - data
+        - category_id
+        - category_name
+        - color_type
+        - money
       properties:
-        data:
-          type: object
-          required:
-            - category_id
-            - category_name
-            - color_type
-            - money
-          properties:
-            category_id:
-              type: integer
-              format: int64
-              example: 1
-            category_name:
-              type: string
-              example: 食費
-            color_type:
-              type: integer
-              format: int64
-              example: 1
-            money:
-              type: integer
-              format: int64
-              example: 200
+        category_id:
+          type: integer
+          format: int64
+          example: 1
+        category_name:
+          type: string
+          example: 食費
+        color_type:
+          type: integer
+          format: int64
+          example: 1
+        money:
+          type: integer
+          format: int64
+          example: 200
     AnnualChange:
       type: object
       required:
-        - data
+        - month
+        - sum_money
       properties:
-        data:
-          type: object
-          required:
-            - month
-            - sum_money
-          properties:
-            month:
-              type: string
-              format: date
-              example: 20200501
-            sum_money:
-              type: integer
-              format: int64
-              example: 100000
-    Partners:
-      type: object
-      properties:
-        data:
-          type: object
-          $ref: '#/components/schemas/Partner'
+        month:
+          type: string
+          format: date
+          example: '20200501'
+        sum_money:
+          type: integer
+          format: int64
+          example: 100000
     Partner:
       type: object
       required:
