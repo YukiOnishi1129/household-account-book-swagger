@@ -331,6 +331,7 @@ paths:
         - detail
       summary: No.11 日別の金額情報取得
       description: 日別の金額情報取得
+      operationId: get-details
       security:
         - CookieAuth: []
       parameters:
@@ -347,36 +348,35 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                type: array
                 items:
-                  $ref: '#/components/schemas/Details'
+                  $ref: '#/components/schemas/Detail'
                 example:
-                  data:
-                    - id: 1
-                      money: 2000
-                      img_file: xxx.jpg
-                      category_id: 1
-                      category_name: 食費
-                    - id: 2
-                      money: 30000
-                      img_file: xxx.jpg
-                      category_id: 3
-                      category_name: 経費
-                    - id: 3
-                      money: 100000
-                      img_file: xxx.jpg
-                      category_id: 1
-                      category_name: 食費
-                    - id: 4
-                      money: 150
-                      img_file: xxx.jpg
-                      category_id: 2
-                      category_name: 衣服
-                    - id: 5
-                      money: 300
-                      img_file: xxx.jpg
-                      category_id: 1
-                      category_name: 食費
+                  - id: 1
+                    money: 2000
+                    img_file: xxx.jpg
+                    category_id: 1
+                    category_name: 食費
+                  - id: 2
+                    money: 30000
+                    img_file: xxx.jpg
+                    category_id: 3
+                    category_name: 経費
+                  - id: 3
+                    money: 100000
+                    img_file: xxx.jpg
+                    category_id: 1
+                    category_name: 食費
+                  - id: 4
+                    money: 150
+                    img_file: xxx.jpg
+                    category_id: 2
+                    category_name: 衣服
+                  - id: 5
+                    money: 300
+                    img_file: xxx.jpg
+                    category_id: 1
+                    category_name: 食費
   # No.12 金額情報新規登録
   /detail/create:
     post:
@@ -384,6 +384,7 @@ paths:
         - detail
       summary: No.12 金額情報新規登録
       description: 金額入力
+      operationId: add-detail
       security:
         - CookieAuth: []
       parameters: []
@@ -432,6 +433,7 @@ paths:
         - detail
       summary: No.13 金額情報編集
       description: 金額編集
+      operationId: edit-detail
       security:
         - CookieAuth: []
       parameters:
@@ -480,6 +482,7 @@ paths:
         - detail
       summary: No.14 金額情報削除
       description: 金額削除
+      operationId: delete-detail
       security:
         - CookieAuth: []
       parameters:
@@ -535,6 +538,7 @@ paths:
         - category
       summary: No.16 カテゴリ新規登録
       description: カテゴリ新規登録
+      operationId: add-category
       security:
         - CookieAuth: []
       parameters: []
@@ -573,6 +577,7 @@ paths:
         - category
       summary: No.17 カテゴリ情報編集
       description: カテゴリ情報編集
+      operationId: edit-category
       security:
         - CookieAuth: []
       parameters:
@@ -616,6 +621,7 @@ paths:
         - category
       summary: No.18 カテゴリ情報削除
       description: カテゴリ情報削除
+      operationId: delete-category
       security:
         - CookieAuth: []
       parameters:
@@ -915,12 +921,6 @@ components:
               type: integer
               format: int64
               example: 200
-    Details:
-      type: object
-      properties:
-        data:
-          type: object
-          $ref: '#/components/schemas/Detail'
     Detail:
       type: object
       required:
@@ -948,12 +948,6 @@ components:
         category_name:
           type: string
           example: 食費
-    Categories:
-      type: object
-      properties:
-        data:
-          type: object
-          $ref: '#/components/schemas/Category'
     Category:
       type: object
       required:
