@@ -22,6 +22,7 @@ paths:
       parameters: []
       requestBody:
         description: リクエストパラメータ
+        required: true
         content:
           application/json:
             schema:
@@ -49,6 +50,7 @@ paths:
       parameters: []
       requestBody:
         description: リクエストパラメータ
+        required: true
         content:
           application/json:
             schema:
@@ -76,6 +78,7 @@ paths:
       parameters: []
       requestBody:
         description: リクエストパラメータ
+        required: true
         content:
           application/json:
             schema:
@@ -109,6 +112,7 @@ paths:
       parameters: []
       requestBody:
         description: リクエストパラメータ
+        required: true
         content:
           application/json:
             schema:
@@ -172,6 +176,7 @@ paths:
       parameters: []
       requestBody:
         description: リクエストパラメータ
+        required: true
         content:
           application/json:
             schema:
@@ -190,10 +195,11 @@ paths:
       parameters: []
       requestBody:
         description: リクエストパラメータ
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RequestRemindMail'
+              $ref: '#/components/schemas/RequestRemindKey'
       responses:
         '201':
           description: パスワードリマインド 変更成功
@@ -219,6 +225,7 @@ paths:
       parameters: []
       requestBody:
         description: リクエストパラメータ
+        required: true
         content:
           application/json:
             schema:
@@ -331,6 +338,7 @@ paths:
       parameters: []
       requestBody:
         description: リクエストパラメータ
+        required: true
         content:
           application/json:
             schema:
@@ -366,6 +374,7 @@ paths:
             type: integer
       requestBody:
         description: リクエストパラメータ
+        required: true
         content:
           application/json:
             schema:
@@ -450,6 +459,7 @@ paths:
       parameters: []
       requestBody:
         description: リクエストパラメータ
+        required: true
         content:
           application/json:
             schema:
@@ -484,6 +494,7 @@ paths:
             type: integer
       requestBody:
         description: リクエストパラメータ
+        required: true
         content:
           application/json:
             schema:
@@ -661,6 +672,7 @@ paths:
       parameters: []
       requestBody:
         description: リクエストパラメータ
+        required: true
         content:
           application/json:
             schema:
