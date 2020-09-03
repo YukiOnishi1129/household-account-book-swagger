@@ -92,12 +92,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-                example:
-                  id: 1
-                  name: 'やすおのパートナー'
-                  email: 'partner@test.com'
-                  user_type: 2
-                  main_user_id: 1
+              example:
+                id: 1
+                name: 'やすおのパートナー'
+                email: 'partner@test.com'
+                user_type: 2
+                main_user_id: 1
   # N0.4 お試しログイン
   /trial-login:
     post:
@@ -125,12 +125,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-                example:
-                  id: 1
-                  name: 'お試しマン'
-                  email: 'otameshi@test.com'
-                  user_type: 3
-                  main_user_id: 0
+              example:
+                id: 1
+                name: 'お試しマン'
+                email: 'otameshi@test.com'
+                user_type: 3
+                main_user_id: 0
   # No.5 認証ルーティング
   /auth:
     get:
@@ -149,12 +149,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-                example:
-                  id: 1
-                  name: 'やすお'
-                  email: 'test@test.com'
-                  user_type: 1
-                  main_user_id: 0
   # No.6 ログアウト
   /logout:
     delete:
@@ -228,12 +222,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RequestRemindKey'
+              $ref: '#/components/schemas/RequestChangePassword'
       responses:
         '204':
           description: パスワード変更処理成功
   # No.10 カレンダー情報取得
-  /calendar/{year_and_month}:
+  /calendar/{date}:
     get:
       tags:
         - calendar
@@ -243,9 +237,9 @@ paths:
       security:
         - CookieAuth: []
       parameters:
-        - name: year_and_month
+        - name: date
           in: path
-          description: year_and_month
+          description: date
           required: true
           schema:
             type: string
@@ -340,39 +334,19 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                category_id:
-                  type: integer
-                  format: int64
-                money:
-                  type: integer
-                  format: int64
-                img_file:
-                  type: string
-                date:
-                  type: string
-                  format: date
-            example:
-              category_id: 1
-              money: 200
-              img_file: xxx.jpg
-              date: '20200501'
+              $ref: '#/components/schemas/RequestDetail'
       responses:
         '201':
           description: 金額入力成功
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/Detail'
-                example:
-                  id: 1
-                  money: 2000
-                  img_file: xxx.jpg
-                  category_id: 1
-                  category_name: 食費
+                $ref: '#/components/schemas/Detail'
+              example:
+                category_id: 6
+                money: 4000
+                img_file: 'hhh.png'
+                date: '20200501'
   # No.13 金額情報編集
   /detail/{money_id}:
     put:
@@ -395,34 +369,19 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                money:
-                  type: integer
-                  format: int64
-                catgory_id:
-                  type: integer
-                  format: int64
-                img_file:
-                  type: string
-                date:
-                  type: string
-                  format: date
+              $ref: '#/components/schemas/RequestDetail'
       responses:
         '200':
           description: 金額編集成功
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/Detail'
-                example:
-                  id: 1
-                  money: 2000
-                  category_id: 1
-                  img_file: xxx.jpg
-                  category_name: 食費
+                $ref: '#/components/schemas/Detail'
+              example:
+                category_id: 2
+                money: 5000
+                img_file: 'sss.png'
+                date: '20200501'
     # No.14 金額情報削除
     delete:
       tags:
@@ -494,29 +453,18 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                category_name:
-                  type: string
-                color_type:
-                  type: integer
-                  format: int64
-            example:
-              category_name: 勉強代
-              color_type: 6
+              $ref: '#/components/schemas/RequestCategory'
       responses:
         '201':
           description: カテゴリ新規登録成功
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/Category'
-                example:
-                  - id: 6
-                    category_name: 勉強代
-                    color_type: 6
+                $ref: '#/components/schemas/Category'
+              example:
+                id: 6
+                category_name: 勉強代
+                color_type: 6
   # No.17 カテゴリ情報編集
   /category/{category_id}:
     put:
@@ -539,29 +487,18 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                id:
-                  type: integer
-                  format: int64
-                category_name:
-                  type: string
-                color_type:
-                  type: integer
-                  format: int64
+              $ref: '#/components/schemas/RequestCategory'
       responses:
         '200':
           description: カテゴリ情報更新成功
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/Category'
-                example:
-                  - id: 6
-                    category_name: 勉強代
-                    color_type: 6
+                $ref: '#/components/schemas/Category'
+              example:
+                id: 2
+                category_name: 勉強代
+                color_type: 6
     # No.18 カテゴリ情報削除
     delete:
       tags:
@@ -582,7 +519,7 @@ paths:
         '204':
           description: カテゴリ情報削除成功
   # No.19 月のカテゴリ別支出金額取得
-  /month-rate/{month}:
+  /month-rate/{date}:
     get:
       tags:
         - month_rate
@@ -592,9 +529,9 @@ paths:
       security:
         - CookieAuth: []
       parameters:
-        - name: month
+        - name: date
           in: path
-          description: month
+          description: date
           required: true
           schema:
             type: string
@@ -703,14 +640,14 @@ paths:
                   $ref: '#/components/schemas/Partner'
                 example:
                   - id: 4
-                    name: パートナー1
-                    email: partner@gmail.com
+                    name: 'パートナー1'
+                    email: 'partner@gmail.com'
                   - id: 5
-                    name: パートナー2
-                    email: partner2@gmail.com
+                    name: 'パートナー2'
+                    email: 'partner2@gmail.com'
                   - id: 6
-                    name: パートナー3
-                    email: partner3@gmail.com
+                    name: 'パートナー3'
+                    email: 'partner3@gmail.com'
   # No.22 パートナーユーザー登録
   /partner/create:
     post:
@@ -727,32 +664,18 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                user_id:
-                  type: integer
-                  format: int64
-                name:
-                  type: string
-                email:
-                  type: string
-            example:
-              user_id: 4
-              name: パートナー
-              email: partner@gmail.com
+              $ref: '#/components/schemas/RequestPartner'
       responses:
         '201':
           description: パートナーユーザー登録成功
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/Partner'
-                example:
-                  - user_id: 6
-                    name: パートナー
-                    email: partner@gmail.com
+                $ref: '#/components/schemas/Partner'
+              example:
+                id: 7
+                name: 'パートナー4'
+                email: 'partner4@gmail.com'
   # No.23 パートナーユーザー削除
   /partner/{user_id}:
     delete:
@@ -786,6 +709,10 @@ components:
       type: object
       required:
         - id
+        - name
+        - email
+        - user_type
+        - main_user_id
       properties:
         id:
           title: 'ユーザーID'
@@ -868,7 +795,7 @@ components:
           type: string
           example: 'hfjavoh'
     RequestChangePassword:
-      description: パパスワード変更のリクエストデータ
+      description: パスワード変更のリクエストデータ
       type: object
       required:
         - password
@@ -878,6 +805,7 @@ components:
           type: string
           example: 'password'
     Calendar:
+      description: カレンダー情報
       type: object
       required:
         - date
@@ -887,7 +815,7 @@ components:
         date:
           type: string
           format: date
-          example: 20200501
+          example: '20200501'
         sum_month_money:
           type: integer
           format: int64
@@ -897,6 +825,7 @@ components:
           items:
             $ref: '#/components/schemas/SumDateMoney'
     SumDateMoney:
+      description: 日別の支出金額の合計
       type: object
       required:
         - date
@@ -911,6 +840,7 @@ components:
           format: int64
           example: 200
     Detail:
+      description: 日別の支出金額一覧
       type: object
       required:
         - id
@@ -929,14 +859,38 @@ components:
           example: 200
         img_file:
           type: string
-          example: xxx.jpg
+          example: 'xxx.jpg'
         category_id:
           type: integer
           format: int64
           example: 1
         category_name:
           type: string
-          example: 食費
+          example: '食費'
+    RequestDetail:
+      description: 金額情報のリクエストデータ
+      type: object
+      required:
+        - category_id
+        - money
+        - img_file
+        - date
+      properties:
+        category_id:
+          type: integer
+          format: int64
+          example: 2
+        money:
+          type: integer
+          format: int64
+          example: 4000
+        img_file:
+          type: string
+          example: 'xxx.jpg'
+        date:
+          type: string
+          format: date
+          example: '20200501'
     Category:
       type: object
       required:
@@ -950,11 +904,27 @@ components:
           example: 1
         category_name:
           type: string
-          example: 食費
+          example: '食費'
         color_type:
           type: integer
           format: int64
           example: 1
+    RequestCategory:
+      description: カテゴリ情報のリクエストデータ
+      type: object
+      required:
+        - category_name
+        - color_type
+        - img_file
+        - date
+      properties:
+        category_name:
+          type: string
+          example: '勉強代'
+        color_type:
+          type: integer
+          format: int64
+          example: 6
     MonthRate:
       type: object
       required:
@@ -969,7 +939,7 @@ components:
           example: 1
         category_name:
           type: string
-          example: 食費
+          example: '食費'
         color_type:
           type: integer
           format: int64
@@ -1005,10 +975,28 @@ components:
           example: 4
         name:
           type: string
-          example: パートナーさん
+          example: 'パートナーさん'
         email:
           type: string
-          example: partner@gmail.com
+          example: 'partner@gmail.com'
+    RequestPartner:
+      description: パートナーユーザー情報のリクエストデータ
+      type: object
+      required:
+        - id
+        - name
+        - email
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 4
+        name:
+          type: string
+          example: 'パートナーさん'
+        email:
+          type: string
+          example: 'partner@gmail.com'
 
 tags:
   - name: users
