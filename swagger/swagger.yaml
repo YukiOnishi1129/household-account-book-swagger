@@ -258,20 +258,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Calendar'
-                example:
+              example:
+                date: '20200501'
+                sum_month_money: 20000
+                sum_date_money:
                   - date: '20200501'
-                    sum_month_money: 20000
-                    sum_date_money:
-                      - date: '20200501'
-                        money: 3200
-                      - date: '20200502'
-                        money: 100
-                      - date: '20200503'
-                        money: 3500
-                      - date: '20200504'
-                        money: 4200
-                      - date: '20200505'
-                        money: 300
+                    money: 3200
+                  - date: '20200502'
+                    money: 100
+                  - date: '20200503'
+                    money: 3500
+                  - date: '20200504'
+                    money: 4200
+                  - date: '20200505'
+                    money: 300
   # No.11 日別の金額情報取得
   /detail/{date}:
     get:
