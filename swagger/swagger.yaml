@@ -7,7 +7,7 @@ servers:
   - url: 'http://localhost:{port}'
     variables:
       port:
-        default: '8000'
+        default: '4010'
     description: モックAPI
 
 paths:
@@ -19,6 +19,7 @@ paths:
       summary: No.1 ログイン
       description: ログイン処理
       operationId: login
+      security: []
       parameters: []
       requestBody:
         description: リクエストパラメータ
@@ -39,6 +40,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   # No.2 会員登録
   /register:
     post:
@@ -47,6 +54,7 @@ paths:
       summary: No.2 会員登録
       description: 会員登録処理
       operationId: register
+      security: []
       parameters: []
       requestBody:
         description: リクエストパラメータ
@@ -62,7 +70,7 @@ paths:
             Set-Cookie:
               schema:
                 type: string
-                example: development_session=abcde12345; Path=/; HttpOnly
+                # example: development_session=abcde12345; Path=/; HttpOnly
           content:
             application/json:
               schema:
@@ -75,6 +83,7 @@ paths:
       summary: No.3 パートナーログイン
       description: パートナーユーザーによるログイン処理
       operationId: partner-login
+      security: []
       parameters: []
       requestBody:
         description: リクエストパラメータ
@@ -90,7 +99,7 @@ paths:
             Set-Cookie:
               schema:
                 type: string
-                example: development_session=abcde12345; Path=/; HttpOnly
+                # example: development_session=abcde12345; Path=/; HttpOnly
           content:
             application/json:
               schema:
@@ -109,6 +118,7 @@ paths:
       summary: No.4 お試しログイン
       description: お試しユーザーによるログイン処理
       operationId: try-login
+      security: []
       parameters: []
       requestBody:
         description: リクエストパラメータ
@@ -124,7 +134,7 @@ paths:
             Set-Cookie:
               schema:
                 type: string
-                example: development_session=abcde12345; Path=/; HttpOnly
+                # example: development_session=abcde12345; Path=/; HttpOnly
           content:
             application/json:
               schema:
@@ -143,8 +153,6 @@ paths:
       summary: No.5 認証ルーティング
       description: 認証ルーティング
       operationId: auth-rooting
-      security:
-        - CookieAuth: []
       parameters: []
       responses:
         '200':
@@ -153,6 +161,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+        '401':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   # No.6 ログアウト
   /logout:
     delete:
@@ -173,6 +187,7 @@ paths:
       summary: No.7 パスワードリマインド(アドレス送信)
       description: パスワードリマインド アドレス送信
       operationId: remind-email
+      security: []
       parameters: []
       requestBody:
         description: リクエストパラメータ
@@ -192,6 +207,7 @@ paths:
       summary: No.8 パスワードリマインド(キー送信)
       description: パスワードリマインド キー送信
       operationId: remind-key
+      security: []
       parameters: []
       requestBody:
         description: リクエストパラメータ
@@ -207,7 +223,7 @@ paths:
             Set-Cookie:
               schema:
                 type: string
-                example: development_session=abcde12345; Path=/; HttpOnly
+                # example: development_session=abcde12345; Path=/; HttpOnly
           content:
             application/json:
               schema:
@@ -220,8 +236,6 @@ paths:
       summary: No.9 パスワード変更
       description: パスワード変更処理
       operationId: change-password
-      security:
-        - CookieAuth: []
       parameters: []
       requestBody:
         description: リクエストパラメータ
@@ -241,8 +255,6 @@ paths:
       summary: No.10 カレンダー情報取得
       description: カレンダー情報取得
       operationId: get-calender
-      security:
-        - CookieAuth: []
       parameters:
         - name: date
           in: path
@@ -259,19 +271,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/Calendar'
               example:
-                date: '20200501'
+                date: '2020-05-01'
                 sum_month_money: 20000
                 sum_date_money:
-                  - date: '20200501'
+                  - date: '2020-05-01'
                     money: 3200
-                  - date: '20200502'
+                  - date: '2020-05-02'
                     money: 100
-                  - date: '20200503'
+                  - date: '2020-05-03'
                     money: 3500
-                  - date: '20200504'
+                  - date: '2020-05-04'
                     money: 4200
-                  - date: '20200505'
+                  - date: '2020-05-05'
                     money: 300
+        '401':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   # No.11 日別の金額情報取得
   /detail/{date}:
     get:
@@ -280,8 +298,6 @@ paths:
       summary: No.11 日別の金額情報取得
       description: 日別の金額情報取得
       operationId: get-details
-      security:
-        - CookieAuth: []
       parameters:
         - name: date
           in: path
@@ -333,8 +349,6 @@ paths:
       summary: No.12 金額情報新規登録
       description: 金額入力
       operationId: add-detail
-      security:
-        - CookieAuth: []
       parameters: []
       requestBody:
         description: リクエストパラメータ
@@ -364,8 +378,6 @@ paths:
       summary: No.13 金額情報編集
       description: 金額編集
       operationId: edit-detail
-      security:
-        - CookieAuth: []
       parameters:
         - name: money_id
           in: path
@@ -400,8 +412,6 @@ paths:
       summary: No.14 金額情報削除
       description: 金額削除
       operationId: delete-detail
-      security:
-        - CookieAuth: []
       parameters:
         - name: money_id
           in: path
@@ -420,8 +430,6 @@ paths:
       summary: No.15 カテゴリ情報取得
       description: カテゴリ情報取得
       operationId: get-categories
-      security:
-        - CookieAuth: []
       parameters: []
       responses:
         '200':
@@ -456,8 +464,6 @@ paths:
       summary: No.16 カテゴリ新規登録
       description: カテゴリ新規登録
       operationId: add-category
-      security:
-        - CookieAuth: []
       parameters: []
       requestBody:
         description: リクエストパラメータ
@@ -485,8 +491,6 @@ paths:
       summary: No.17 カテゴリ情報編集
       description: カテゴリ情報編集
       operationId: edit-category
-      security:
-        - CookieAuth: []
       parameters:
         - name: category_id
           in: path
@@ -494,6 +498,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
       requestBody:
         description: リクエストパラメータ
         required: true
@@ -519,8 +524,6 @@ paths:
       summary: No.18 カテゴリ情報削除
       description: カテゴリ情報削除
       operationId: delete-category
-      security:
-        - CookieAuth: []
       parameters:
         - name: category_id
           in: path
@@ -528,6 +531,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '204':
           description: カテゴリ情報削除成功
@@ -539,8 +543,6 @@ paths:
       summary: No.19 月のカテゴリ別支出金額取得
       description: 月のカテゴリ別支出金額取得
       operationId: get-month-rate
-      security:
-        - CookieAuth: []
       parameters:
         - name: date
           in: path
@@ -587,8 +589,6 @@ paths:
       summary: No.20 年間の支出推移取得
       description: 年間の支出推移
       operationId: get-annual-change
-      security:
-        - CookieAuth: []
       parameters:
         - name: date
           in: path
@@ -607,29 +607,29 @@ paths:
                 items:
                   $ref: '#/components/schemas/AnnualChange'
                 example:
-                  - month: '20190601'
+                  - month: '2019-06-01'
                     sum_money: 30000
-                  - month: '20190701'
+                  - month: '2019-07-01'
                     sum_money: 20000
-                  - month: '20190801'
+                  - month: '2019-08-01'
                     sum_money: 40000
-                  - month: '20190901'
+                  - month: '2019-09-01'
                     sum_money: 132000
-                  - month: '20191001'
+                  - month: '2019-10-01'
                     sum_money: 140000
-                  - month: '20191101'
+                  - month: '2019-11-01'
                     sum_money: 100000
-                  - month: '20191201'
+                  - month: '2019-12-01'
                     sum_money: 100000
-                  - month: '20200101'
+                  - month: '2020-01-01'
                     sum_money: 50000
-                  - month: '20200201'
+                  - month: '2020-02-01'
                     sum_money: 60000
-                  - month: '20200301'
+                  - month: '2020-03-01'
                     sum_money: 90000
-                  - month: '20200401'
+                  - month: '2020-04-01'
                     sum_money: 20000
-                  - month: '20200501'
+                  - month: '2020-05-01'
                     sum_money: 30000
   # No21 パートナーユーザー取得
   /partner:
@@ -639,8 +639,6 @@ paths:
       summary: No.21 パートナーユーザー取得
       description: パートナーユーザー取得
       operationId: get-partners
-      security:
-        - CookieAuth: []
       parameters: []
       responses:
         '200':
@@ -669,8 +667,6 @@ paths:
       summary: No.22 パートナーユーザー登録
       description: パートナーユーザー登録
       operationId: add-partner
-      security:
-        - CookieAuth: []
       parameters: []
       requestBody:
         description: リクエストパラメータ
@@ -698,8 +694,6 @@ paths:
       summary: No.23 パートナーユーザー削除
       description: パートナーユーザー削除
       operationId: delete-partner
-      security:
-        - CookieAuth: []
       parameters:
         - name: user_id
           in: path
@@ -713,7 +707,7 @@ paths:
 
 components:
   securitySchemes:
-    CookieAuth:
+    cookieAuth:
       type: apiKey
       in: cookie
       name: development_session
@@ -848,7 +842,7 @@ components:
         date:
           type: string
           format: date
-          example: '20200501'
+          example: '2020-05-01'
         money:
           type: integer
           format: int64
@@ -904,7 +898,7 @@ components:
         date:
           type: string
           format: date
-          example: '20200501'
+          example: 20200501
     Category:
       type: object
       required:
@@ -1011,7 +1005,30 @@ components:
         email:
           type: string
           example: 'partner@gmail.com'
-
+    ModelError:
+      title: ModelError
+      type: object
+      description: エラー
+      properties:
+        message:
+          type: string
+          description: エラーメッセージ
+          example: エラーメッセージ
+      required:
+        - message
+    ErrorResponse:
+      title: ErrorResponse
+      type: object
+      description: エラーレスポンス
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelError'
+      required:
+        - errors
+security:
+  - cookieAuth: []
 tags:
   - name: users
     description: ユーザー情報

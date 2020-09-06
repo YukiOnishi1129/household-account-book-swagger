@@ -11,11 +11,20 @@ services:
       - ./swagger:/swagger
     command: /swagger/swagger.yaml
 
-  apisprout:
-    image: danielgtaylor/apisprout
-    container_name: apisprout
+  # apisprout:
+  #   image: danielgtaylor/apisprout
+  #   container_name: apisprout
+  #   ports:
+  #     - 8000:8000
+  #   volumes:
+  #     - ./swagger/swagger.yaml:/swagger.yaml
+  #   command: /swagger.yaml --watch
+
+  swagger-api:
+    image: stoplight/prism:3
+    container_name: 'swagger-api'
     ports:
-      - 8000:8000
+      - 4010:4010
+    command: mock -h 0.0.0.0 /swagger.yaml
     volumes:
       - ./swagger/swagger.yaml:/swagger.yaml
-    command: /swagger.yaml --watch
