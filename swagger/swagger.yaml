@@ -302,29 +302,29 @@ paths:
                 example:
                   - id: 1
                     money: 2000
-                    img_file: xxx.jpg
+                    img_file: 'xxx.jpg'
                     category_id: 1
-                    category_name: 食費
+                    category_name: '食費'
                   - id: 2
                     money: 30000
-                    img_file: xxx.jpg
+                    img_file: 'xxx.jpg'
                     category_id: 3
-                    category_name: 経費
+                    category_name: '経費'
                   - id: 3
                     money: 100000
-                    img_file: xxx.jpg
+                    img_file: 'xxx.jpg'
                     category_id: 1
-                    category_name: 食費
+                    category_name: '食費'
                   - id: 4
                     money: 150
-                    img_file: xxx.jpg
+                    img_file: 'xxx.jpg'
                     category_id: 2
-                    category_name: 衣服
+                    category_name: '衣服'
                   - id: 5
                     money: 300
-                    img_file: xxx.jpg
+                    img_file: 'xxx.jpg'
                     category_id: 1
-                    category_name: 食費
+                    category_name: '食費'
   # No.12 金額情報新規登録
   /detail/create:
     post:
@@ -351,10 +351,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/Detail'
               example:
+                id: 6
                 category_id: 6
                 money: 4000
                 img_file: 'hhh.png'
-                date: '20200501'
+                category_name: '食費'
   # No.13 金額情報編集
   /detail/{money_id}:
     put:
@@ -387,10 +388,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/Detail'
               example:
+                id: 6
                 category_id: 2
                 money: 5000
                 img_file: 'sss.png'
-                date: '20200501'
+                category_name: '食費'
     # No.14 金額情報削除
     delete:
       tags:
