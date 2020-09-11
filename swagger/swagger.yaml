@@ -11,6 +11,18 @@ servers:
     description: モックAPI
 
 paths:
+  # No.0 csrf-cookie
+  /sanctum/csrf-cookie:
+    get:
+      tags:
+        - csrf-cookie
+      description: csrf-cookie
+      operationId: csrf-cookie
+      security: []
+      parameters: []
+      responses:
+        '200':
+          description: cookie保護成功
   # No.1 ログイン
   /login:
     post:
@@ -70,11 +82,17 @@ paths:
             Set-Cookie:
               schema:
                 type: string
-                # example: development_session=abcde12345; Path=/; HttpOnly
+                example: development_session=abcde12345; Path=/; HttpOnly
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   # No.3 パートナーログイン
   /partner-login:
     post:
@@ -99,7 +117,7 @@ paths:
             Set-Cookie:
               schema:
                 type: string
-                # example: development_session=abcde12345; Path=/; HttpOnly
+                example: development_session=abcde12345; Path=/; HttpOnly
           content:
             application/json:
               schema:
@@ -110,6 +128,12 @@ paths:
                 email: 'partner@test.com'
                 user_type: 2
                 main_user_id: 1
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   # N0.4 お試しログイン
   /trial-login:
     post:
@@ -134,7 +158,7 @@ paths:
             Set-Cookie:
               schema:
                 type: string
-                # example: development_session=abcde12345; Path=/; HttpOnly
+                example: development_session=abcde12345; Path=/; HttpOnly
           content:
             application/json:
               schema:
@@ -145,6 +169,12 @@ paths:
                 email: 'otameshi@test.com'
                 user_type: 3
                 main_user_id: 0
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   # No.5 認証ルーティング
   /auth:
     get:
@@ -1030,6 +1060,8 @@ components:
 security:
   - cookieAuth: []
 tags:
+  - name: csrf-cookie
+    description: csrf保護
   - name: users
     description: ユーザー情報
   - name: calendar
