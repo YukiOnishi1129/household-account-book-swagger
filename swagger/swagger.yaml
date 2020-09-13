@@ -17,7 +17,7 @@ paths:
       tags:
         - csrf-cookie
       description: csrf-cookie
-      operationId: csrf-cookie
+      operationId: sanctum
       security: []
       parameters: []
       responses:
