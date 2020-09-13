@@ -11,24 +11,25 @@ servers:
     description: モックAPI
 
 paths:
-  # No.0 csrf-cookie
+  # No.1 csrf-cookie
   /sanctum/csrf-cookie:
     get:
       tags:
         - csrf-cookie
-      description: csrf-cookie
+      summary: No.1 csrf-cookie処理
+      description: csrf-cookie処理
       operationId: sanctum
       security: []
       parameters: []
       responses:
         '200':
           description: cookie保護成功
-  # No.1 ログイン
+  # No.2 ログイン
   /login:
     post:
       tags:
         - users
-      summary: No.1 ログイン
+      summary: No.2 ログイン
       description: ログイン処理
       operationId: login
       security: []
@@ -58,12 +59,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  # No.2 会員登録
+  # No.3 会員登録
   /register:
     post:
       tags:
         - users
-      summary: No.2 会員登録
+      summary: No.3 会員登録
       description: 会員登録処理
       operationId: register
       security: []
@@ -93,12 +94,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  # No.3 パートナーログイン
+  # No.4 パートナーログイン
   /partner-login:
     post:
       tags:
         - users
-      summary: No.3 パートナーログイン
+      summary: No.4 パートナーログイン
       description: パートナーユーザーによるログイン処理
       operationId: partner-login
       security: []
@@ -128,18 +129,20 @@ paths:
                 email: 'partner@test.com'
                 user_type: 2
                 main_user_id: 1
+                login_flg: false
+                input_flg: false
         '422':
           description: Unprocessable Entity
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  # N0.4 お試しログイン
+  # N0.5 お試しログイン
   /trial-login:
     post:
       tags:
         - users
-      summary: No.4 お試しログイン
+      summary: No.5 お試しログイン
       description: お試しユーザーによるログイン処理
       operationId: try-login
       security: []
@@ -169,18 +172,20 @@ paths:
                 email: 'otameshi@test.com'
                 user_type: 3
                 main_user_id: 0
+                login_flg: false
+                input_flg: false
         '422':
           description: Unprocessable Entity
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  # No.5 認証ルーティング
+  # No.6 認証ルーティング
   /auth:
     get:
       tags:
         - users
-      summary: No.5 認証ルーティング
+      summary: No.6 認証ルーティング
       description: 認証ルーティング
       operationId: auth-rooting
       parameters: []
@@ -197,24 +202,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  # No.6 ログアウト
+  # No.7 ログアウト
   /logout:
     delete:
       tags:
         - users
-      summary: No.6 ログアウト
+      summary: No.7 ログアウト
       description: ログアウト処理
       operationId: logout
       parameters: []
       responses:
         '204':
           description: ログアウト成功
-  # No.7 パスワードリマインド(アドレス送信)
+  # No.8 パスワードリマインド(アドレス送信)
   /remind-mail:
     post:
       tags:
         - users
-      summary: No.7 パスワードリマインド(アドレス送信)
+      summary: No.8 パスワードリマインド(アドレス送信)
       description: パスワードリマインド アドレス送信
       operationId: remind-email
       security: []
@@ -229,12 +234,12 @@ paths:
       responses:
         '204':
           description: パスワードリマインド アドレス送信成功
-  # No.8 パスワードリマインド(キー送信)
+  # No.9 パスワードリマインド(キー送信)
   /remind-key:
     post:
       tags:
         - users
-      summary: No.8 パスワードリマインド(キー送信)
+      summary: No.9 パスワードリマインド(キー送信)
       description: パスワードリマインド キー送信
       operationId: remind-key
       security: []
@@ -258,12 +263,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-  # No.9 パスワード変更
+  # No.10 パスワード変更
   /change-password:
-    post:
+    put:
       tags:
         - users
-      summary: No.9 パスワード変更
+      summary: No.10 パスワード変更
       description: パスワード変更処理
       operationId: change-password
       parameters: []
@@ -277,12 +282,72 @@ paths:
       responses:
         '204':
           description: パスワード変更処理成功
-  # No.10 カレンダー情報取得
+  # No.11 本日のログイン済フラグ更新
+  /change-login-flg:
+    put:
+      tags:
+        - users
+      summary: No.11 本日のログイン済フラグ更新
+      description: ログイン済フラグ更新
+      operationId: change-login-flg
+      parameters: []
+      responses:
+        '200':
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              example:
+                id: 1
+                name: 'やすおのパートナー'
+                email: 'partner@test.com'
+                user_type: 2
+                main_user_id: 1
+                login_flg: true
+                input_flg: false
+        '401':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  # No.12 本日の金額入力済フラグ更新
+  /change-input-flg:
+    put:
+      tags:
+        - users
+      summary: No.12 本日の金額入力済フラグ更新
+      description: 金額入力済フラグ更新
+      operationId: change-input-flg
+      parameters: []
+      responses:
+        '200':
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              example:
+                id: 1
+                name: 'やすおのパートナー'
+                email: 'partner@test.com'
+                user_type: 2
+                main_user_id: 1
+                login_flg: true
+                input_flg: true
+        '401':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  # No.13 カレンダー情報取得
   /calendar/{date}:
     get:
       tags:
         - calendar
-      summary: No.10 カレンダー情報取得
+      summary: No.13 カレンダー情報取得
       description: カレンダー情報取得
       operationId: get-calender
       parameters:
@@ -320,12 +385,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  # No.11 日別の金額情報取得
+  # No.14 日別の金額情報取得
   /detail/{date}:
     get:
       tags:
         - detail
-      summary: No.11 日別の金額情報取得
+      summary: No.14 日別の金額情報取得
       description: 日別の金額情報取得
       operationId: get-details
       parameters:
@@ -371,12 +436,12 @@ paths:
                     img_file: 'xxx.jpg'
                     category_id: 1
                     category_name: '食費'
-  # No.12 金額情報新規登録
+  # No.15 金額情報新規登録
   /detail/create:
     post:
       tags:
         - detail
-      summary: No.12 金額情報新規登録
+      summary: No.15 金額情報新規登録
       description: 金額入力
       operationId: add-detail
       parameters: []
@@ -400,12 +465,12 @@ paths:
                 money: 4000
                 img_file: 'hhh.png'
                 category_name: '食費'
-  # No.13 金額情報編集
+  # No.16 金額情報編集
   /detail/{money_id}:
     put:
       tags:
         - detail
-      summary: No.13 金額情報編集
+      summary: No.16 金額情報編集
       description: 金額編集
       operationId: edit-detail
       parameters:
@@ -435,11 +500,11 @@ paths:
                 money: 5000
                 img_file: 'sss.png'
                 category_name: '食費'
-    # No.14 金額情報削除
+    # No.17 金額情報削除
     delete:
       tags:
         - detail
-      summary: No.14 金額情報削除
+      summary: No.17 金額情報削除
       description: 金額削除
       operationId: delete-detail
       parameters:
@@ -452,12 +517,12 @@ paths:
       responses:
         '204':
           description: 金額削除成功
-  # No.15 カテゴリ情報取得
+  # No.18 カテゴリ情報取得
   /category:
     get:
       tags:
         - category
-      summary: No.15 カテゴリ情報取得
+      summary: No.18 カテゴリ情報取得
       description: カテゴリ情報取得
       operationId: get-categories
       parameters: []
@@ -486,12 +551,12 @@ paths:
                   - id: 5
                     category_name: 雑費
                     color_type: 5
-  # No.16 カテゴリ新規登録
+  # No.19 カテゴリ新規登録
   /category/create:
     post:
       tags:
         - category
-      summary: No.16 カテゴリ新規登録
+      summary: No.19 カテゴリ新規登録
       description: カテゴリ新規登録
       operationId: add-category
       parameters: []
@@ -513,12 +578,12 @@ paths:
                 id: 6
                 category_name: 勉強代
                 color_type: 6
-  # No.17 カテゴリ情報編集
+  # No.20 カテゴリ情報編集
   /category/{category_id}:
     put:
       tags:
         - category
-      summary: No.17 カテゴリ情報編集
+      summary: No.20 カテゴリ情報編集
       description: カテゴリ情報編集
       operationId: edit-category
       parameters:
@@ -547,11 +612,11 @@ paths:
                 id: 2
                 category_name: 勉強代
                 color_type: 6
-    # No.18 カテゴリ情報削除
+    # No.21 カテゴリ情報削除
     delete:
       tags:
         - category
-      summary: No.18 カテゴリ情報削除
+      summary: No.21 カテゴリ情報削除
       description: カテゴリ情報削除
       operationId: delete-category
       parameters:
@@ -565,12 +630,12 @@ paths:
       responses:
         '204':
           description: カテゴリ情報削除成功
-  # No.19 月のカテゴリ別支出金額取得
+  # No.22 月のカテゴリ別支出金額取得
   /month-rate/{date}:
     get:
       tags:
         - month_rate
-      summary: No.19 月のカテゴリ別支出金額取得
+      summary: No.22 月のカテゴリ別支出金額取得
       description: 月のカテゴリ別支出金額取得
       operationId: get-month-rate
       parameters:
@@ -611,12 +676,12 @@ paths:
                     category_name: 雑費
                     color_type: 5
                     money: 100
-  # No.20 年間の支出推移取得
+  # No.23 年間の支出推移取得
   /annual_change/{date}:
     get:
       tags:
         - annual_change
-      summary: No.20 年間の支出推移取得
+      summary: No.23 年間の支出推移取得
       description: 年間の支出推移
       operationId: get-annual-change
       parameters:
@@ -661,12 +726,12 @@ paths:
                     sum_money: 20000
                   - month: '2020-05-01'
                     sum_money: 30000
-  # No21 パートナーユーザー取得
+  # No24 パートナーユーザー取得
   /partner:
     get:
       tags:
         - partner
-      summary: No.21 パートナーユーザー取得
+      summary: No.24 パートナーユーザー取得
       description: パートナーユーザー取得
       operationId: get-partners
       parameters: []
@@ -689,12 +754,12 @@ paths:
                   - id: 6
                     name: 'パートナー3'
                     email: 'partner3@gmail.com'
-  # No.22 パートナーユーザー登録
+  # No.25 パートナーユーザー登録
   /partner/create:
     post:
       tags:
         - partner
-      summary: No.22 パートナーユーザー登録
+      summary: No.25 パートナーユーザー登録
       description: パートナーユーザー登録
       operationId: add-partner
       parameters: []
@@ -716,12 +781,12 @@ paths:
                 id: 7
                 name: 'パートナー4'
                 email: 'partner4@gmail.com'
-  # No.23 パートナーユーザー削除
+  # No.26 パートナーユーザー削除
   /partner/{user_id}:
     delete:
       tags:
         - partner
-      summary: No.23 パートナーユーザー削除
+      summary: No.26 パートナーユーザー削除
       description: パートナーユーザー削除
       operationId: delete-partner
       parameters:
@@ -751,6 +816,8 @@ components:
         - email
         - user_type
         - main_user_id
+        - login_flg
+        - input_flg
       properties:
         id:
           title: 'ユーザーID'
@@ -775,6 +842,14 @@ components:
           type: integer
           format: int64
           example: 0
+        login_flg:
+          title: 'ログイン済フラグ'
+          type: boolean
+          example: false
+        input_flg:
+          title: '入力済フラグ'
+          type: boolean
+          example: false
     RequestLogin:
       description: ログイン時のリクエストデータ
       type: object
