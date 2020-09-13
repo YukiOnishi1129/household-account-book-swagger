@@ -57,3 +57,7 @@ docker-compose exec app bash
 - Laravel で作る REST な Web アプリ
 
   - https://qiita.com/MasaKu/items/82b9743383e73cb62c3e
+
+- Prism (cookie 認証とかできる)
+
+  - https://future-architect.github.io/articles/20191008/
