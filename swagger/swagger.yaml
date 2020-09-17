@@ -210,6 +210,7 @@ paths:
       summary: No.7 ログアウト
       description: ログアウト処理
       operationId: logout
+      security: []
       parameters: []
       responses:
         '204':
