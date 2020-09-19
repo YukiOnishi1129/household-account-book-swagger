@@ -259,7 +259,7 @@ paths:
             Set-Cookie:
               schema:
                 type: string
-                # example: development_session=abcde12345; Path=/; HttpOnly
+                example: development_session=abcde12345; Path=/; HttpOnly
           content:
             application/json:
               schema:
