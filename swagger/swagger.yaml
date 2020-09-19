@@ -912,10 +912,15 @@ components:
       description: パスワード変更のリクエストデータ
       type: object
       required:
-        - password
+        - current_password
+        - new_password
       properties:
-        password:
-          title: 'パスワード'
+        current_password:
+          title: '現在のパスワード'
+          type: string
+          example: 'password'
+        new_password:
+          title: '新しいパスワード'
           type: string
           example: 'password'
     Calendar:
