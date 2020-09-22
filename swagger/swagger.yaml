@@ -1102,14 +1102,9 @@ components:
       description: パートナーユーザー情報のリクエストデータ
       type: object
       required:
-        - id
         - name
         - email
       properties:
-        id:
-          type: integer
-          format: int64
-          example: 4
         name:
           type: string
           example: 'パートナーさん'
