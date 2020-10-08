@@ -552,6 +552,12 @@ paths:
                   - id: 5
                     category_name: 雑費
                     color_type: 5
+                  - id: 6
+                    category_name: 研究開発費
+                    color_type: 6
+                  - id: 7
+                    category_name: 交友費
+                    color_type: 7
   # No.19 カテゴリ新規登録
   /category/create:
     post:
@@ -576,9 +582,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Category'
               example:
-                id: 6
-                category_name: 勉強代
-                color_type: 6
+                id: 8
+                category_name: プログラマー
+                color_type: 8
   # No.20 カテゴリ情報編集
   /category/{category_id}:
     put:
@@ -603,16 +609,16 @@ paths:
             schema:
               $ref: '#/components/schemas/RequestCategory'
       responses:
-        '200':
+        '204':
           description: カテゴリ情報更新成功
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Category'
               example:
-                id: 2
-                category_name: 勉強代
-                color_type: 6
+                id: 8
+                category_name: プログラマー
+                color_type: 8
     # No.21 カテゴリ情報削除
     delete:
       tags:
