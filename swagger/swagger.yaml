@@ -616,7 +616,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Category'
               example:
-                id: 8
+                id: 1
                 category_name: プログラマー
                 color_type: 8
     # No.21 カテゴリ情報削除
