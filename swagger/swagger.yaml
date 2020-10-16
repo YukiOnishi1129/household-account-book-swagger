@@ -1124,7 +1124,7 @@ components:
       required:
         - date
       properties:
-        month:
+        date:
           type: string
           format: date
           example: '2020-05-01'
