@@ -670,7 +670,7 @@ paths:
                   - category_id: 2
                     category_name: 衣服
                     color_type: 2
-                    money: 300
+                    money: 1200
                   - category_id: 3
                     category_name: 交通費
                     color_type: 3
@@ -683,8 +683,54 @@ paths:
                     category_name: 雑費
                     color_type: 5
                     money: 100
+                  - category_id: 6
+                    category_name: 研究開発費
+                    color_type: 6
+                    money: 3200
+                  - category_id: 7
+                    category_name: 交友費
+                    color_type: 7
+                    money: 7000
+                  - category_id: 8
+                    category_name: プログラマー
+                    color_type: 8
+                    money: 4500
+  # 変更月取得
+  /month-rate-date:
+    get:
+      tags:
+        - month_rate
+      summary: 変更月取得
+      description: 変更月取得
+      operationId: get-month-rate-date
+      parameters: []
+      responses:
+        '200':
+          description: 取得成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MonthRateDate'
+                example:
+                  - date: '2019-10-01'
+                  - date: '2019-11-01'
+                  - date: '2019-12-01'
+                  - date: '2020-01-01'
+                  - date: '2020-02-01'
+                  - date: '2020-03-01'
+                  - date: '2020-04-01'
+                  - date: '2020-05-01'
+                  - date: '2020-06-01'
+                  - date: '2020-07-01'
+                  - date: '2020-08-01'
+                  - date: '2020-09-01'
+                  - date: '2020-10-01'
+                  - date: '2020-11-01'
+                  - date: '2020-12-01'
   # No.23 年間の支出推移取得
-  /annual_change/{date}:
+  /annual-change/{date}:
     get:
       tags:
         - annual_change
@@ -1073,6 +1119,15 @@ components:
           type: integer
           format: int64
           example: 200
+    MonthRateDate:
+      type: object
+      required:
+        - date
+      properties:
+        month:
+          type: string
+          format: date
+          example: '2020-05-01'
     AnnualChange:
       type: object
       required:
