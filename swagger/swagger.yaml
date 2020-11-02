@@ -415,27 +415,27 @@ paths:
                   - id: 1
                     money: 2000
                     img_file: 'xxx.jpg'
-                    category_id: 1
+                    color_type: 1
                     category_name: '食費'
                   - id: 2
                     money: 30000
                     img_file: 'xxx.jpg'
-                    category_id: 3
+                    color_type: 3
                     category_name: '経費'
                   - id: 3
                     money: 100000
                     img_file: 'xxx.jpg'
-                    category_id: 1
+                    color_type: 1
                     category_name: '食費'
                   - id: 4
                     money: 150
                     img_file: 'xxx.jpg'
-                    category_id: 2
+                    color_type: 2
                     category_name: '衣服'
                   - id: 5
                     money: 300
                     img_file: 'xxx.jpg'
-                    category_id: 1
+                    color_type: 1
                     category_name: '食費'
   # No.15 金額情報新規登録
   /detail/create:
@@ -1017,7 +1017,7 @@ components:
         - id
         - money
         - img_file
-        - category_id
+        - color_type
         - category_name
       properties:
         id:
@@ -1031,7 +1031,7 @@ components:
         img_file:
           type: string
           example: 'xxx.jpg'
-        category_id:
+        color_type:
           type: integer
           format: int64
           example: 1
