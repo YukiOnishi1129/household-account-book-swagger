@@ -6,7 +6,7 @@ services:
     image: swagger-ui-watcher
     container_name: swagger-ui-watcher
     ports:
-      - 8080:8000
+      - 8000:8000
     volumes:
       - ./swagger:/swagger
     command: /swagger/swagger.yaml
